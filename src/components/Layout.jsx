@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useInventory } from '../context/InventoryContext';
 import { AddVendorModal } from './AddVendorModal';
+import { AccuracyDiagnosticsModal } from './AccuracyDiagnosticsModal';
 import { 
   LayoutDashboard, 
   MessageSquareCode, 
@@ -22,7 +23,9 @@ import {
   Flame,
   Plus,
   Truck,
-  Receipt
+  Receipt,
+  Activity,
+  Cpu
 } from 'lucide-react';
 
 export const Layout = ({ children }) => {
@@ -39,6 +42,7 @@ export const Layout = ({ children }) => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAddVendorOpen, setIsAddVendorOpen] = useState(false);
+  const [isAccuracyModalOpen, setIsAccuracyModalOpen] = useState(false);
 
   const latestLog = dailyLogs[0];
   const hasNightClosing = !!latestLog?.nightClosing;
@@ -66,10 +70,15 @@ export const Layout = ({ children }) => {
 
   return (
     <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* Global Add Vendor Modal */}
+      {/* Global Modals */}
       <AddVendorModal
         isOpen={isAddVendorOpen}
         onClose={() => setIsAddVendorOpen(false)}
+      />
+
+      <AccuracyDiagnosticsModal
+        isOpen={isAccuracyModalOpen}
+        onClose={() => setIsAccuracyModalOpen(false)}
       />
 
       {/* Desktop Sidebar */}
@@ -89,9 +98,9 @@ export const Layout = ({ children }) => {
             </div>
           </div>
 
-          {/* Date Selector */}
-          <div className="px-4 py-3 bg-slate-900/50 border-b border-slate-800/60">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+          {/* Date Selector & AI Model Health Pill */}
+          <div className="px-4 py-3 bg-slate-900/50 border-b border-slate-800/60 space-y-2">
+            <div className="flex items-center justify-between text-xs text-slate-400">
               <span className="font-semibold uppercase tracking-wider text-[11px] text-slate-400">Audit Date</span>
               <span className="text-amber-400 font-mono text-[11px]">Today: {selectedDate}</span>
             </div>
@@ -101,10 +110,22 @@ export const Layout = ({ children }) => {
               onChange={(e) => setSelectedDate(e.target.value)}
               className="w-full bg-slate-800/90 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 font-medium focus:outline-none focus:border-orange-500 transition-colors"
             />
+
+            {/* AI Accuracy Pill */}
+            <button
+              onClick={() => setIsAccuracyModalOpen(true)}
+              className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold transition-colors"
+            >
+              <div className="flex items-center gap-1.5">
+                <Cpu className="w-3.5 h-3.5" />
+                <span>AI Accuracy Rate</span>
+              </div>
+              <span className="font-mono bg-emerald-500 text-slate-950 text-[10px] px-1.5 py-0.2 rounded font-extrabold">96.5%</span>
+            </button>
           </div>
 
           {/* Navigation Links */}
-          <nav className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-290px)]">
+          <nav className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-340px)]">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -112,7 +133,7 @@ export const Layout = ({ children }) => {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 ${
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-150 ${
                     isActive
                       ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-600/20'
                       : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -147,7 +168,7 @@ export const Layout = ({ children }) => {
         <div className="p-3 border-t border-slate-800 bg-slate-900/60 space-y-2">
           <button
             onClick={() => setIsAddVendorOpen(true)}
-            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold shadow-md shadow-orange-600/30 transition-all"
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold shadow-md shadow-orange-600/30 transition-all active:scale-95"
           >
             <Plus className="w-4 h-4" />
             <span>+ Add Supplier / Vendor</span>
@@ -196,13 +217,23 @@ export const Layout = ({ children }) => {
             {/* Desktop Branch Title */}
             <h1 className="hidden lg:flex items-center gap-2 text-base font-bold text-white tracking-tight">
               <span>Indus Wok Kitchen</span>
-              <span className="text-xs font-normal text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-600/40">
+              <span className="text-xs font-normal text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-600/40">
                 POS Connected · 338 Live Bills · ₹1.95L Ledger
               </span>
             </h1>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Accuracy Rate Trigger in Header */}
+            <button
+              onClick={() => setIsAccuracyModalOpen(true)}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/60 border border-emerald-500/40 text-emerald-400 text-xs font-bold active:scale-95 transition-all"
+            >
+              <Activity className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="hidden sm:inline">Accuracy:</span>
+              <span className="font-mono text-white bg-emerald-600 px-1.5 py-0.2 rounded text-[10px]">96.5%</span>
+            </button>
+
             {/* Add Vendor Quick Button */}
             <button
               onClick={() => setIsAddVendorOpen(true)}
@@ -323,8 +354,21 @@ export const Layout = ({ children }) => {
                 </button>
               </div>
 
-              {/* Quick Add Vendor in Drawer */}
-              <div className="p-3 bg-slate-950/60 border-b border-slate-800">
+              {/* Accuracy & Add Vendor Drawer Actions */}
+              <div className="p-3 bg-slate-950/60 border-b border-slate-800 space-y-2">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setIsAccuracyModalOpen(true);
+                  }}
+                  className="w-full flex items-center justify-between py-2 px-3 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 text-xs font-bold"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <Activity className="w-4 h-4" /> AI Accuracy Score
+                  </span>
+                  <span className="font-mono bg-emerald-500 text-slate-950 px-2 py-0.5 rounded-full text-[10px]">96.5%</span>
+                </button>
+
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
@@ -338,7 +382,7 @@ export const Layout = ({ children }) => {
               </div>
 
               {/* Navigation List */}
-              <div className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-280px)] ios-scroll">
+              <div className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-320px)] ios-scroll">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.id;
