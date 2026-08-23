@@ -16,7 +16,9 @@ import {
   Upload,
   ArrowRight,
   TrendingDown,
-  ShieldAlert
+  ShieldAlert,
+  Plus,
+  Minus
 } from 'lucide-react';
 import { createScalePhotoSvg, createDeliveryChallanSvg } from '../utils/mockImages';
 import confetti from 'canvas-confetti';
@@ -46,7 +48,6 @@ export const MorningReceivingTab = () => {
   const [morningCounts, setMorningCounts] = useState(() => {
     const init = {};
     items.forEach(it => {
-      // Default to night closing weight minus minor drip loss (0.2kg) or night closing
       const nightW = nightClosing?.items?.[it.id]?.weight;
       if (morningOpening?.items?.[it.id]?.weight !== undefined) {
         init[it.id] = morningOpening.items[it.id].weight;
@@ -126,6 +127,22 @@ export const MorningReceivingTab = () => {
   // Total Available for Day
   const totalAvailableStockKg = Number((totalMorningOpeningKg + totalDeliveryKg).toFixed(2));
 
+  // Mobile steppers
+  const adjustMorningCount = (itemId, delta) => {
+    const cur = parseFloat(morningCounts[itemId]) || 0;
+    const nextVal = Math.max(0, Number((cur + delta).toFixed(1)));
+    setMorningCounts({ ...morningCounts, [itemId]: nextVal });
+  };
+
+  const adjustDeliveryWeight = (itemId, delta) => {
+    const cur = parseFloat(deliveryCounts[itemId]?.weight) || 0;
+    const nextVal = Math.max(0, Number((cur + delta).toFixed(1)));
+    setDeliveryCounts({
+      ...deliveryCounts,
+      [itemId]: { ...deliveryCounts[itemId], weight: nextVal }
+    });
+  };
+
   // Handlers
   const handleSaveMorningOpening = () => {
     const structuredItems = {};
@@ -145,9 +162,9 @@ export const MorningReceivingTab = () => {
       notes: `Overnight drip variance: -${overnightVarianceKg} kg`
     });
 
-    setToastMessage('✅ Morning Pending Stock verified & reconciled with night closing!');
+    setToastMessage('✅ Morning stock verified & reconciled!');
     confetti({ particleCount: 35, spread: 50 });
-    setTimeout(() => setToastMessage(null), 3500);
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
   const handleSaveDeliveryReceived = () => {
@@ -170,23 +187,13 @@ export const MorningReceivingTab = () => {
       challanPhoto
     });
 
-    setToastMessage(`✅ ${totalDeliveryKg} kg Fresh Chicken from ${selectedSupplier} successfully added to today's inventory!`);
+    setToastMessage(`✅ ${totalDeliveryKg} kg fresh chicken added to kitchen!`);
     confetti({ particleCount: 45, spread: 60 });
-    setTimeout(() => setToastMessage(null), 3500);
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // WhatsApp Recap Generator
-  const generatedMorningWhatsAppMsg = `*MORNING OPENING & FRESH POULTRY DELIVERY REPORT - ${selectedDate}*\n` +
-    `🏢 The Tandoor & Grill Kitchen\n` +
-    `☀️ Shift Lead: ${morningStaff} | Time: 09:00 AM\n\n` +
-    `📊 *1. Morning Reconciled Stock:* ${totalMorningOpeningKg} kg (Overnight Drip Variance: -${overnightVarianceKg} kg)\n` +
-    `🚚 *2. Fresh Delivery Recvd:* ${totalDeliveryKg} kg (${selectedSupplier} | Inv #${invoiceNo})\n` +
-    `💰 Delivery Bill: ${currency}${totalDeliveryCost.toLocaleString()} | Vehicle Temp: ${vehicleTemp} ✓\n\n` +
-    `🍗 *Total Meat Available for Today's Service:* *${totalAvailableStockKg} kg*\n` +
-    `Challan & Scale photos verified. Kitchen prep ready to commence.`;
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Toast Alert */}
       {toastMessage && (
         <div className="fixed top-6 right-6 z-50 bg-emerald-600 text-white font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-400 animate-bounce">
@@ -196,134 +203,115 @@ export const MorningReceivingTab = () => {
       )}
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/80 border border-slate-800 p-5 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-4 sm:p-5 rounded-2xl">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl shadow-lg">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl sm:text-2xl shadow-lg shrink-0">
             ☀️
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg font-bold text-white">Morning Opening & Delivery Intake</h2>
-              <span className="text-xs text-slate-400 font-mono bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h2 className="text-base sm:text-lg font-bold text-white">Morning Audit & Delivery</h2>
+              <span className="text-[11px] text-slate-400 font-mono bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">
                 {selectedDate} (Morning Shift)
               </span>
             </div>
-            <p className="text-xs text-slate-400">
-              Cross-check morning pending stock against night closing photos, then log newly arrived poultry crates and invoice slips.
+            <p className="text-xs text-slate-400 hidden sm:block">
+              Verify morning pending stock, then log newly arrived poultry crates.
             </p>
           </div>
         </div>
 
         {/* Tab Switcher: Opening vs Delivery */}
-        <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 w-full sm:w-auto">
           <button
             onClick={() => setSubTab('opening-audit')}
-            className={`px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 ${
+            className={`flex-1 sm:flex-none px-3 py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
               subTab === 'opening-audit' ? 'bg-amber-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Scale className="w-3.5 h-3.5" />
-            <span>1. Reconcile Morning Stock</span>
+            <span>1. Morning Reconcile</span>
           </button>
           <button
             onClick={() => setSubTab('delivery-intake')}
-            className={`px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 ${
+            className={`flex-1 sm:flex-none px-3 py-2 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
               subTab === 'delivery-intake' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Truck className="w-3.5 h-3.5" />
-            <span>2. Log Fresh Delivery ({totalDeliveryKg} kg)</span>
+            <span>2. Delivery Intake</span>
           </button>
         </div>
       </div>
 
       {/* Summary KPI Strip */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block">Night Closing (Recorded)</span>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
+          <span className="text-[9px] uppercase font-bold text-slate-400 block">Night Closing</span>
           <div className="flex items-baseline gap-1 mt-0.5">
-            <span className="text-lg font-extrabold text-slate-300">{totalNightClosingKg}</span>
+            <span className="text-base sm:text-lg font-extrabold text-slate-300">{totalNightClosingKg}</span>
             <span className="text-xs text-slate-400">KG</span>
           </div>
-          <span className="text-[10px] text-slate-400">{nightClosing ? `By ${nightClosing.staff}` : 'Not logged yet'}</span>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block">Morning Pending Count</span>
+        <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
+          <span className="text-[9px] uppercase font-bold text-slate-400 block">Morning Pending</span>
           <div className="flex items-baseline gap-1 mt-0.5">
-            <span className="text-lg font-extrabold text-amber-400">{totalMorningOpeningKg}</span>
+            <span className="text-base sm:text-lg font-extrabold text-amber-400">{totalMorningOpeningKg}</span>
             <span className="text-xs text-slate-400">KG</span>
           </div>
-          <span className="text-[10px] text-emerald-400">Scale verified</span>
         </div>
 
-        <div className="bg-slate-900/80 border border-slate-800 p-3.5 rounded-xl">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block">Overnight Drip / Thaw Loss</span>
+        <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
+          <span className="text-[9px] uppercase font-bold text-slate-400 block">Overnight Drip</span>
           <div className="flex items-baseline gap-1 mt-0.5">
-            <span className={`text-lg font-extrabold ${overnightVarianceKg > 1.5 ? 'text-red-400' : 'text-emerald-400'}`}>
+            <span className={`text-base sm:text-lg font-extrabold ${overnightVarianceKg > 1.5 ? 'text-red-400' : 'text-emerald-400'}`}>
               -{overnightVarianceKg}
             </span>
             <span className="text-xs text-slate-400">KG</span>
           </div>
-          <span className="text-[10px] text-slate-400">
-            {overnightVarianceKg > 1.5 ? '⚠️ Unusually high loss!' : 'Normal refrigerator drip (<2%)'}
-          </span>
         </div>
 
-        <div className="bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/30 p-3.5 rounded-xl">
-          <span className="text-[10px] uppercase font-bold text-emerald-400 block">Total Kitchen Meat Ready Today</span>
+        <div className="bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/30 p-3 rounded-xl">
+          <span className="text-[9px] uppercase font-bold text-emerald-400 block">Total Ready Today</span>
           <div className="flex items-baseline gap-1 mt-0.5">
-            <span className="text-xl font-extrabold text-emerald-300">{totalAvailableStockKg}</span>
+            <span className="text-base sm:text-xl font-extrabold text-emerald-300">{totalAvailableStockKg}</span>
             <span className="text-xs text-slate-400">KG</span>
           </div>
-          <span className="text-[10px] text-emerald-400 font-semibold">(Morning Stock + New Delivery)</span>
         </div>
       </div>
 
       {/* View 1: Morning Opening Reconcile */}
       {subTab === 'opening-audit' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Form (7 Cols) */}
-          <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Morning Physical Count vs Night Closing Audit
-                </h3>
-                <p className="text-[11px] text-slate-400">Identify overnight shrinkage, thaw loss, or discrepancies</p>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+          <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                Morning Physical Count vs Night Closing
+              </h3>
               <button
                 onClick={handleSaveMorningOpening}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-600/20"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-amber-600/20"
               >
                 <Save className="w-3.5 h-3.5" />
-                <span>Save Morning Reconcile</span>
+                <span>Save Reconcile</span>
               </button>
             </div>
 
-            {/* Shift Lead Input */}
-            <div className="flex items-center gap-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-              <User className="w-4 h-4 text-amber-400" />
-              <div className="flex-1">
-                <span className="text-[10px] text-slate-400 font-bold block">Morning Shift Receiver:</span>
+            <div className="flex items-center gap-2 bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/60">
+              <User className="w-4 h-4 text-amber-400 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <span className="text-[9px] text-slate-400 font-bold block">Morning Shift Receiver:</span>
                 <input
                   type="text"
                   value={morningStaff}
                   onChange={(e) => setMorningStaff(e.target.value)}
-                  className="bg-transparent text-xs font-bold text-white focus:outline-none w-full"
+                  className="bg-transparent text-xs font-bold text-white focus:outline-none w-full truncate"
                 />
               </div>
             </div>
 
-            {/* Comparison Table */}
-            <div className="space-y-2">
-              <div className="grid grid-cols-12 text-[10px] font-bold text-slate-400 px-3 uppercase">
-                <span className="col-span-5">Raw Chicken Cut</span>
-                <span className="col-span-2 text-right">Night Closing</span>
-                <span className="col-span-3 text-right">Morning Scale</span>
-                <span className="col-span-2 text-right">Variance</span>
-              </div>
-
+            <div className="space-y-2.5">
               {items.map((item) => {
                 const nightWeight = nightClosing?.items?.[item.id]?.weight || 0;
                 const morningWeight = Number(morningCounts[item.id]) || 0;
@@ -333,38 +321,52 @@ export const MorningReceivingTab = () => {
                 return (
                   <div
                     key={item.id}
-                    className={`grid grid-cols-12 items-center p-3 rounded-xl border transition-all ${
-                      isLoss 
-                        ? 'bg-red-950/20 border-red-500/40' 
-                        : 'bg-slate-800/40 border-slate-700/60'
+                    className={`p-3 rounded-xl border transition-all space-y-2 ${
+                      isLoss ? 'bg-red-950/20 border-red-500/40' : 'bg-slate-800/40 border-slate-700/60'
                     }`}
                   >
-                    <div className="col-span-5 flex items-center gap-2">
-                      <span>{item.icon}</span>
-                      <div>
-                        <h4 className="text-xs font-bold text-white">{item.name}</h4>
-                        <span className="text-[10px] text-slate-400">{item.category}</span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span>{item.icon}</span>
+                        <div>
+                          <h4 className="text-xs font-bold text-white">{item.name}</h4>
+                          <span className="text-[10px] text-slate-400">Night Log: {nightWeight} {item.unit}</span>
+                        </div>
+                      </div>
+
+                      {/* Steppers for Mobile */}
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => adjustMorningCount(item.id, -0.5)}
+                          className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 active:scale-90 text-slate-300 font-bold text-xs flex items-center justify-center border border-slate-700"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+
+                        <input
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          value={morningCounts[item.id] || ''}
+                          onChange={(e) => setMorningCounts({ ...morningCounts, [item.id]: e.target.value })}
+                          className="w-16 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white font-mono font-bold text-center focus:outline-none focus:border-amber-500"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={() => adjustMorningCount(item.id, 0.5)}
+                          className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 active:scale-90 text-slate-300 font-bold text-xs flex items-center justify-center border border-slate-700"
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
                       </div>
                     </div>
 
-                    <div className="col-span-2 text-right font-mono text-xs text-slate-300">
-                      {nightWeight} <span className="text-[10px] text-slate-500">{item.unit}</span>
-                    </div>
-
-                    <div className="col-span-3 flex justify-end">
-                      <input
-                        type="number"
-                        step="0.1"
-                        min="0"
-                        value={morningCounts[item.id] || ''}
-                        onChange={(e) => setMorningCounts({ ...morningCounts, [item.id]: e.target.value })}
-                        className="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white font-mono font-bold text-right focus:outline-none focus:border-amber-500"
-                      />
-                    </div>
-
-                    <div className="col-span-2 text-right font-mono text-xs font-bold">
-                      <span className={diff < 0 ? (isLoss ? 'text-red-400 font-extrabold' : 'text-amber-400') : 'text-emerald-400'}>
-                        {diff > 0 ? `+${diff}` : `${diff}`} {item.unit}
+                    <div className="flex items-center justify-between text-[10px] pt-1.5 border-t border-slate-700/40">
+                      <span className="text-slate-400">Overnight Variance:</span>
+                      <span className={`font-mono font-bold ${diff < 0 ? (isLoss ? 'text-red-400' : 'text-amber-400') : 'text-emerald-400'}`}>
+                        {diff > 0 ? `+${diff}` : `${diff}`} {item.unit} {diff < 0 ? '(drip loss)' : ''}
                       </span>
                     </div>
                   </div>
@@ -373,38 +375,16 @@ export const MorningReceivingTab = () => {
             </div>
           </div>
 
-          {/* Right Visual Comparison (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Night Closing Photo Reference */}
-            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-1.5">
-                  <Moon className="w-3.5 h-3.5 text-orange-400" />
-                  <h4 className="text-xs font-bold text-white uppercase">Night Scale Photo Proof</h4>
-                </div>
-                <span className="text-[10px] text-slate-400 font-mono">23:45 PM Log</span>
-              </div>
-              <div className="rounded-xl overflow-hidden border border-slate-700 bg-slate-950 max-h-44 flex items-center justify-center">
-                <img
-                  src={nightClosing?.photoUrl || createScalePhotoSvg('Pending Night Stock', totalNightClosingKg, `${selectedDate} 23:45`)}
-                  alt="Night closing audit"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Morning Scale Photo Container */}
-            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-1.5">
-                  <Sun className="w-3.5 h-3.5 text-amber-400" />
-                  <h4 className="text-xs font-bold text-white uppercase">Morning Reconcile Photo</h4>
-                </div>
+            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-white uppercase">📷 Morning Reconcile Photo</span>
                 <label className="cursor-pointer text-[10px] text-amber-400 hover:underline flex items-center gap-1">
-                  <Upload className="w-3 h-3" /> Upload Photo
+                  <Upload className="w-3 h-3" /> Snap Photo
                   <input 
                     type="file" 
                     accept="image/*" 
+                    capture="environment"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
@@ -431,33 +411,28 @@ export const MorningReceivingTab = () => {
 
       {/* View 2: Fresh Stock Delivery Intake */}
       {subTab === 'delivery-intake' && (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Delivery Form (7 Cols) */}
-          <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Log Fresh Poultry Delivery (Arrived Today)
-                </h3>
-                <p className="text-[11px] text-slate-400">Record crates received, supplier rates, and verified weight</p>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+          <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                Fresh Poultry Crates Received
+              </h3>
               <button
                 onClick={handleSaveDeliveryReceived}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs shadow-md shadow-emerald-600/20"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Save Delivery Check-in</span>
+                <span>Save Delivery</span>
               </button>
             </div>
 
-            {/* Delivery Metadata */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-                <label className="text-[10px] text-slate-400 font-bold block mb-1">Supplier / Poultry Vendor</label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/60">
+                <label className="text-[9px] text-slate-400 font-bold block mb-1">Supplier</label>
                 <select
                   value={selectedSupplier}
                   onChange={(e) => setSelectedSupplier(e.target.value)}
-                  className="w-full bg-slate-900 text-xs font-semibold text-white border border-slate-700 rounded-lg p-1.5 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-900 text-xs font-semibold text-white border border-slate-700 rounded-lg p-1.5"
                 >
                   {suppliers.map(s => (
                     <option key={s.id} value={s.name}>{s.name}</option>
@@ -465,36 +440,28 @@ export const MorningReceivingTab = () => {
                 </select>
               </div>
 
-              <div className="bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-                <label className="text-[10px] text-slate-400 font-bold block mb-1">Invoice / Challan #</label>
+              <div className="bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/60">
+                <label className="text-[9px] text-slate-400 font-bold block mb-1">Invoice / Challan #</label>
                 <input
                   type="text"
                   value={invoiceNo}
                   onChange={(e) => setInvoiceNo(e.target.value)}
-                  className="w-full bg-slate-900 text-xs font-mono font-bold text-white border border-slate-700 rounded-lg p-1.5 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-900 text-xs font-mono font-bold text-white border border-slate-700 rounded-lg p-1.5"
                 />
               </div>
 
-              <div className="bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-                <label className="text-[10px] text-slate-400 font-bold block mb-1">Vehicle Temp (HACCP)</label>
+              <div className="bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/60">
+                <label className="text-[9px] text-slate-400 font-bold block mb-1">Vehicle Temp</label>
                 <input
                   type="text"
                   value={vehicleTemp}
                   onChange={(e) => setVehicleTemp(e.target.value)}
-                  className="w-full bg-slate-900 text-xs font-bold text-emerald-400 border border-slate-700 rounded-lg p-1.5 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-900 text-xs font-bold text-emerald-400 border border-slate-700 rounded-lg p-1.5"
                 />
               </div>
             </div>
 
-            {/* Itemized Delivery Inputs */}
-            <div className="space-y-2">
-              <div className="grid grid-cols-12 text-[10px] font-bold text-slate-400 px-3 uppercase">
-                <span className="col-span-5">Raw Chicken Cut</span>
-                <span className="col-span-3 text-right">Received (KG)</span>
-                <span className="col-span-2 text-right">Rate/KG</span>
-                <span className="col-span-2 text-right">Amount</span>
-              </div>
-
+            <div className="space-y-2.5">
               {items.map((item) => {
                 const w = Number(deliveryCounts[item.id]?.weight) || 0;
                 const p = Number(deliveryCounts[item.id]?.unitPrice) || item.defaultCostPerUnit;
@@ -503,84 +470,69 @@ export const MorningReceivingTab = () => {
                 return (
                   <div 
                     key={item.id}
-                    className="grid grid-cols-12 items-center p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 hover:border-slate-600 transition-all"
+                    className="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60 space-y-2"
                   >
-                    <div className="col-span-5 flex items-center gap-2">
-                      <span className="text-base">{item.icon}</span>
-                      <div>
-                        <h4 className="text-xs font-bold text-white">{item.name}</h4>
-                        <span className="text-[10px] text-slate-400">{item.category}</span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">{item.icon}</span>
+                        <div>
+                          <h4 className="text-xs font-bold text-white">{item.name}</h4>
+                          <span className="text-[10px] text-slate-400">Rate: {currency}{p}/kg</span>
+                        </div>
+                      </div>
+
+                      {/* Steppers */}
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => adjustDeliveryWeight(item.id, -1)}
+                          className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 active:scale-90 text-slate-300 font-bold text-xs flex items-center justify-center border border-slate-700"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+
+                        <input
+                          type="number"
+                          step="0.5"
+                          min="0"
+                          value={deliveryCounts[item.id]?.weight ?? ''}
+                          onChange={(e) => setDeliveryCounts({
+                            ...deliveryCounts,
+                            [item.id]: { ...deliveryCounts[item.id], weight: e.target.value }
+                          })}
+                          className="w-16 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white font-mono font-bold text-center focus:outline-none focus:border-emerald-500"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={() => adjustDeliveryWeight(item.id, 1)}
+                          className="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 active:scale-90 text-slate-300 font-bold text-xs flex items-center justify-center border border-slate-700"
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
                       </div>
                     </div>
 
-                    <div className="col-span-3 flex justify-end">
-                      <input
-                        type="number"
-                        step="0.5"
-                        min="0"
-                        value={deliveryCounts[item.id]?.weight ?? ''}
-                        onChange={(e) => setDeliveryCounts({
-                          ...deliveryCounts,
-                          [item.id]: {
-                            ...deliveryCounts[item.id],
-                            weight: e.target.value
-                          }
-                        })}
-                        className="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white font-mono font-bold text-right focus:outline-none focus:border-emerald-500"
-                      />
-                    </div>
-
-                    <div className="col-span-2 flex justify-end">
-                      <input
-                        type="number"
-                        min="0"
-                        value={deliveryCounts[item.id]?.unitPrice ?? item.defaultCostPerUnit}
-                        onChange={(e) => setDeliveryCounts({
-                          ...deliveryCounts,
-                          [item.id]: {
-                            ...deliveryCounts[item.id],
-                            unitPrice: e.target.value
-                          }
-                        })}
-                        className="w-16 bg-slate-900 border border-slate-700 rounded-lg px-1.5 py-1 text-xs text-slate-300 font-mono text-right focus:outline-none focus:border-emerald-500"
-                      />
-                    </div>
-
-                    <div className="col-span-2 text-right font-mono text-xs font-bold text-emerald-400">
-                      {currency}{cost.toLocaleString()}
+                    <div className="flex items-center justify-between text-[10px] pt-1.5 border-t border-slate-700/40 font-mono">
+                      <span className="text-slate-400">Invoiced Amount:</span>
+                      <span className="font-bold text-emerald-400">{currency}{cost.toLocaleString()}</span>
                     </div>
                   </div>
                 );
               })}
             </div>
-
-            {/* Total Delivery Summary */}
-            <div className="mt-4 p-3.5 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between">
-              <div>
-                <span className="text-xs font-bold text-slate-300">Total Delivery Weight:</span>
-                <span className="text-base font-extrabold text-emerald-400 ml-2">{totalDeliveryKg} KG</span>
-              </div>
-              <div>
-                <span className="text-xs font-bold text-slate-300">Total Invoiced:</span>
-                <span className="text-base font-extrabold text-white ml-2">{currency}{totalDeliveryCost.toLocaleString()}</span>
-              </div>
-            </div>
           </div>
 
-          {/* Right Challan & WhatsApp Broadcast (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Challan Photo Preview */}
-            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-emerald-400" />
-                  <h4 className="text-xs font-bold text-white uppercase">Supplier Challan / Bill Photo</h4>
-                </div>
+            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-white uppercase">📷 Challan Photo Proof</span>
                 <label className="cursor-pointer text-[10px] text-emerald-400 hover:underline flex items-center gap-1">
-                  <Upload className="w-3 h-3" /> Upload Bill
+                  <Upload className="w-3 h-3" /> Upload / Camera
                   <input 
                     type="file" 
                     accept="image/*" 
+                    capture="environment"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
@@ -593,32 +545,12 @@ export const MorningReceivingTab = () => {
                   />
                 </label>
               </div>
-              <div className="rounded-xl overflow-hidden border border-slate-700 bg-slate-950 max-h-56 flex items-center justify-center">
+              <div className="rounded-xl overflow-hidden border border-slate-700 bg-slate-950 max-h-52 flex items-center justify-center">
                 <img
                   src={challanPhotoUrl || createDeliveryChallanSvg(invoiceNo, selectedSupplier, totalDeliveryKg, `${currency}${totalDeliveryCost.toLocaleString()}`, `${selectedDate} 08:45 AM`)}
                   alt="Delivery Challan Proof"
                   className="w-full h-full object-contain"
                 />
-              </div>
-            </div>
-
-            {/* Formatted Morning WhatsApp Message */}
-            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="text-xs font-bold text-white uppercase">💬 WhatsApp Morning Recap</h4>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(generatedMorningWhatsAppMsg);
-                    setToastMessage('📋 Morning report copied to clipboard!');
-                    setTimeout(() => setToastMessage(null), 2500);
-                  }}
-                  className="text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-600/40 px-2 py-0.5 rounded flex items-center gap-1 hover:bg-emerald-900/60"
-                >
-                  <Copy className="w-3 h-3" /> Copy
-                </button>
-              </div>
-              <div className="bg-[#0b141a] p-3 rounded-xl border border-[#222e35] text-[11px] text-slate-300 font-mono whitespace-pre-line leading-relaxed max-h-48 overflow-y-auto">
-                {generatedMorningWhatsAppMsg}
               </div>
             </div>
           </div>
