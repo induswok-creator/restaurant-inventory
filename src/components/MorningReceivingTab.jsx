@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
+import { AddVendorModal } from './AddVendorModal';
+import { ScalePhotoUploader } from './ScalePhotoUploader';
 import { 
   Sun, 
   Truck, 
@@ -35,6 +37,7 @@ export const MorningReceivingTab = () => {
     currency 
   } = useInventory();
 
+  const [isAddVendorOpen, setIsAddVendorOpen] = useState(false);
   const currentLog = getLogForDate(selectedDate);
   const nightClosing = currentLog?.nightClosing;
   const morningOpening = currentLog?.morningOpening;
@@ -44,7 +47,7 @@ export const MorningReceivingTab = () => {
   const [subTab, setSubTab] = useState('opening-audit');
 
   // Form State - Morning Opening Reconcile
-  const [morningStaff, setMorningStaff] = useState(morningOpening?.staff || 'Rajesh Kumar (Morning Lead)');
+  const [morningStaff, setMorningStaff] = useState(morningOpening?.staff || 'Rajesh Kumar (Indus Wok Lead)');
   const [morningCounts, setMorningCounts] = useState(() => {
     const init = {};
     items.forEach(it => {
@@ -61,8 +64,8 @@ export const MorningReceivingTab = () => {
   });
 
   // Form State - Delivery Receiving
-  const [selectedSupplier, setSelectedSupplier] = useState(deliveryReceived?.vendor || suppliers[0]?.name || 'Apex Fresh Poultry Farms');
-  const [invoiceNo, setInvoiceNo] = useState(deliveryReceived?.invoiceNo || `APX-${Math.floor(8400 + Math.random() * 500)}`);
+  const [selectedSupplier, setSelectedSupplier] = useState(deliveryReceived?.vendor || suppliers[0]?.name || 'Al-Madina Chicken & Seafood');
+  const [invoiceNo, setInvoiceNo] = useState(deliveryReceived?.invoiceNo || `ALM-${Math.floor(8200 + Math.random() * 500)}`);
   const [vehicleTemp, setVehicleTemp] = useState(deliveryReceived?.vehicleTemp || '+1.8°C');
   const [deliveryCounts, setDeliveryCounts] = useState(() => {
     const init = {};
@@ -82,7 +85,7 @@ export const MorningReceivingTab = () => {
   // Re-sync when selectedDate changes
   useEffect(() => {
     if (morningOpening) {
-      setMorningStaff(morningOpening.staff || 'Rajesh Kumar (Morning Lead)');
+      setMorningStaff(morningOpening.staff || 'Rajesh Kumar (Indus Wok Lead)');
       const counts = {};
       items.forEach(it => {
         counts[it.id] = morningOpening.items?.[it.id]?.weight || 0;
@@ -124,10 +127,8 @@ export const MorningReceivingTab = () => {
   totalDeliveryKg = Number(totalDeliveryKg.toFixed(2));
   totalDeliveryCost = Math.round(totalDeliveryCost);
 
-  // Total Available for Day
   const totalAvailableStockKg = Number((totalMorningOpeningKg + totalDeliveryKg).toFixed(2));
 
-  // Mobile steppers
   const adjustMorningCount = (itemId, delta) => {
     const cur = parseFloat(morningCounts[itemId]) || 0;
     const nextVal = Math.max(0, Number((cur + delta).toFixed(1)));
@@ -187,13 +188,19 @@ export const MorningReceivingTab = () => {
       challanPhoto
     });
 
-    setToastMessage(`✅ ${totalDeliveryKg} kg fresh chicken added to kitchen!`);
+    setToastMessage(`✅ ${totalDeliveryKg} kg fresh chicken from ${selectedSupplier} added!`);
     confetti({ particleCount: 45, spread: 60 });
     setTimeout(() => setToastMessage(null), 3000);
   };
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* Add Vendor Modal */}
+      <AddVendorModal
+        isOpen={isAddVendorOpen}
+        onClose={() => setIsAddVendorOpen(false)}
+      />
+
       {/* Toast Alert */}
       {toastMessage && (
         <div className="fixed top-6 right-6 z-50 bg-emerald-600 text-white font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-400 animate-bounce">
@@ -210,13 +217,13 @@ export const MorningReceivingTab = () => {
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-base sm:text-lg font-bold text-white">Morning Audit & Delivery</h2>
+              <h2 className="text-base sm:text-lg font-bold text-white">Morning Audit & Fresh Delivery Intake</h2>
               <span className="text-[11px] text-slate-400 font-mono bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">
                 {selectedDate} (Morning Shift)
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Verify morning pending stock, then log newly arrived poultry crates.
+              Verify morning pending stock on scale, then log newly arrived crates from Al-Madina / Apex Poultry.
             </p>
           </div>
         </div>
@@ -287,7 +294,7 @@ export const MorningReceivingTab = () => {
           <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                Morning Physical Count vs Night Closing
+                Morning Scale Weight vs Night Closing
               </h3>
               <button
                 onClick={handleSaveMorningOpening}
@@ -366,7 +373,7 @@ export const MorningReceivingTab = () => {
                     <div className="flex items-center justify-between text-[10px] pt-1.5 border-t border-slate-700/40">
                       <span className="text-slate-400">Overnight Variance:</span>
                       <span className={`font-mono font-bold ${diff < 0 ? (isLoss ? 'text-red-400' : 'text-amber-400') : 'text-emerald-400'}`}>
-                        {diff > 0 ? `+${diff}` : `${diff}`} {item.unit} {diff < 0 ? '(drip loss)' : ''}
+                        {diff > 0 ? `+${diff}` : `${diff}`} {item.unit} {diff < 0 ? '(thaw loss)' : ''}
                       </span>
                     </div>
                   </div>
@@ -378,7 +385,7 @@ export const MorningReceivingTab = () => {
           <div className="lg:col-span-5 space-y-4">
             <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-white uppercase">📷 Morning Reconcile Photo</span>
+                <span className="text-xs font-bold text-white uppercase">📷 Scale Photo Proof</span>
                 <label className="cursor-pointer text-[10px] text-amber-400 hover:underline flex items-center gap-1">
                   <Upload className="w-3 h-3" /> Snap Photo
                   <input 
@@ -397,11 +404,11 @@ export const MorningReceivingTab = () => {
                   />
                 </label>
               </div>
-              <div className="rounded-xl overflow-hidden border border-slate-700 bg-slate-950 max-h-44 flex items-center justify-center">
+              <div className="rounded-xl overflow-hidden border border-slate-700 bg-slate-950 max-h-52 flex items-center justify-center">
                 <img
-                  src={morningPhotoUrl || createScalePhotoSvg('Morning Reconcile Count', totalMorningOpeningKg, `${selectedDate} 08:30`)}
+                  src={morningPhotoUrl || '/scale-example.jpg'}
                   alt="Morning opening audit"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain max-h-48"
                 />
               </div>
             </div>
@@ -415,7 +422,7 @@ export const MorningReceivingTab = () => {
           <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                Fresh Poultry Crates Received
+                Fresh Poultry Delivery Intake
               </h3>
               <button
                 onClick={handleSaveDeliveryReceived}
@@ -428,7 +435,15 @@ export const MorningReceivingTab = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <div className="bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/60">
-                <label className="text-[9px] text-slate-400 font-bold block mb-1">Supplier</label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-[9px] text-slate-400 font-bold block">Supplier</label>
+                  <button
+                    onClick={() => setIsAddVendorOpen(true)}
+                    className="text-[9px] text-orange-400 hover:underline font-bold"
+                  >
+                    + Add New
+                  </button>
+                </div>
                 <select
                   value={selectedSupplier}
                   onChange={(e) => setSelectedSupplier(e.target.value)}

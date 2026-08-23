@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
+import { ScalePhotoUploader } from './ScalePhotoUploader';
 import { 
   Moon, 
   Camera, 
@@ -17,7 +18,6 @@ import {
   Plus,
   Minus
 } from 'lucide-react';
-import { createScalePhotoSvg } from '../utils/mockImages';
 import confetti from 'canvas-confetti';
 
 export const NightClosingTab = () => {
@@ -35,14 +35,14 @@ export const NightClosingTab = () => {
   const existingClosing = currentLog?.nightClosing;
 
   // Form State
-  const [staffName, setStaffName] = useState(existingClosing?.staff || 'Sunil Sharma (Night Head)');
+  const [staffName, setStaffName] = useState(existingClosing?.staff || 'Sunil Sharma (Indus Wok Shift Lead)');
   const [chillerTemp, setChillerTemp] = useState(existingClosing?.chillerTemp || '2.2°C');
   const [stockCounts, setStockCounts] = useState(() => {
     const init = {};
     items.forEach(it => {
       init[it.id] = existingClosing?.items?.[it.id]?.weight !== undefined 
         ? existingClosing.items[it.id].weight 
-        : (it.minParKg * 0.85).toFixed(1);
+        : (it.id === 'chk-boneless' ? 2.06 : (it.minParKg * 0.85).toFixed(1));
     });
     return init;
   });
@@ -50,31 +50,31 @@ export const NightClosingTab = () => {
   const [notes, setNotes] = useState(() => {
     const init = {};
     items.forEach(it => {
-      init[it.id] = existingClosing?.items?.[it.id]?.notes || 'Covered in chiller tray';
+      init[it.id] = existingClosing?.items?.[it.id]?.notes || 'Weighed in blue tub on ATOM scale';
     });
     return init;
   });
 
-  const [photoUrl, setPhotoUrl] = useState(existingClosing?.photoUrl || null);
+  const [photoUrl, setPhotoUrl] = useState(existingClosing?.photoUrl || '/scale-example.jpg');
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
 
   // Sync state if existing closing updates
   useEffect(() => {
     if (existingClosing) {
-      setStaffName(existingClosing.staff || 'Sunil Sharma (Night Head)');
+      setStaffName(existingClosing.staff || 'Sunil Sharma (Indus Wok Shift Lead)');
       setChillerTemp(existingClosing.chillerTemp || '2.2°C');
       const updatedCounts = {};
       const updatedNotes = {};
       items.forEach(it => {
         updatedCounts[it.id] = existingClosing.items?.[it.id]?.weight !== undefined 
           ? existingClosing.items[it.id].weight 
-          : (it.minParKg * 0.85).toFixed(1);
-        updatedNotes[it.id] = existingClosing.items?.[it.id]?.notes || 'Covered in chiller tray';
+          : (it.id === 'chk-boneless' ? 2.06 : (it.minParKg * 0.85).toFixed(1));
+        updatedNotes[it.id] = existingClosing.items?.[it.id]?.notes || 'Weighed on ATOM digital scale';
       });
       setStockCounts(updatedCounts);
       setNotes(updatedNotes);
-      setPhotoUrl(existingClosing.photoUrl);
+      setPhotoUrl(existingClosing.photoUrl || '/scale-example.jpg');
     }
   }, [selectedDate, existingClosing]);
 
@@ -82,39 +82,29 @@ export const NightClosingTab = () => {
   const totalWeightKg = Number(Object.values(stockCounts).reduce((a, b) => Number(a) + (Number(b) || 0), 0).toFixed(2));
   const totalEstimatedCost = Math.round(items.reduce((acc, it) => acc + ((Number(stockCounts[it.id]) || 0) * it.defaultCostPerUnit), 0));
 
-  // Handle Photo Generation / Upload
-  const handleGenerateScalePhoto = () => {
-    const newSvg = createScalePhotoSvg('Night Pending Chicken Stock', totalWeightKg, `${selectedDate} 23:45`, chillerTemp);
-    setPhotoUrl(newSvg);
-  };
-
-  const handleCustomUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setPhotoUrl(event.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Adjust weight helper for mobile thumb buttons
   const adjustWeight = (itemId, delta) => {
     const current = parseFloat(stockCounts[itemId]) || 0;
     const nextVal = Math.max(0, Number((current + delta).toFixed(1)));
     setStockCounts({ ...stockCounts, [itemId]: nextVal });
   };
 
+  // When AI Scale OCR detects weight from photo
+  const handleWeightDetectedFromOcr = (detectedWeightKg) => {
+    setStockCounts(prev => ({
+      ...prev,
+      'chk-boneless': Number(detectedWeightKg.toFixed(2))
+    }));
+  };
+
   // Format WhatsApp message
-  const generatedWhatsAppMsg = `*NIGHT CLOSING PENDING STOCK REPORT - ${selectedDate}*\n` +
-    `🏢 The Tandoor & Grill Kitchen\n` +
+  const generatedWhatsAppMsg = `*INDUS WOK NIGHT CLOSING STOCK - ${selectedDate}*\n` +
+    `🥢 Restaurant: Indus Wok Kitchen\n` +
     `📅 Time: 23:45 PM | Supervisor: ${staffName}\n` +
-    `❄️ Chiller Temp: ${chillerTemp} (Verified HACCP)\n\n` +
-    `🍗 *Pending Chicken Counts:*\n` +
+    `❄️ Walk-in Chiller Temp: ${chillerTemp} (HACCP Verified)\n\n` +
+    `🍗 *Pending Chicken Cuts Weighed on Scale:*\n` +
     items.map(it => `• ${it.name}: *${stockCounts[it.id] || 0} ${it.unit}* (${notes[it.id] || 'Chilled'})`).join('\n') +
-    `\n\n📊 *Total Pending Meat: ${totalWeightKg} kg* (Est. Value: ${currency}${totalEstimatedCost.toLocaleString()})\n` +
-    `📸 Photo of digital scale attached. Morning crew please inspect during morning opening.`;
+    `\n\n📊 *Total Pending Stock: ${totalWeightKg} kg* (Est. Value: ${currency}${totalEstimatedCost.toLocaleString()})\n` +
+    `📸 ATOM Digital Scale Photo attached for audit. Morning crew please inspect tray weights.`;
 
   // Save closing log
   const handleSave = () => {
@@ -127,12 +117,10 @@ export const NightClosingTab = () => {
       };
     });
 
-    const finalPhoto = photoUrl || createScalePhotoSvg('Pending Night Stock', totalWeightKg, `${selectedDate} 23:45`, chillerTemp);
-
     logNightClosing(selectedDate, {
       staff: staffName,
       items: structuredItems,
-      photoUrl: finalPhoto,
+      photoUrl: photoUrl || '/scale-example.jpg',
       whatsAppMessage: generatedWhatsAppMsg,
       chillerTemp: chillerTemp
     });
@@ -158,13 +146,13 @@ export const NightClosingTab = () => {
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-base sm:text-lg font-bold text-white">Night Closing Stock Audit</h2>
+              <h2 className="text-base sm:text-lg font-bold text-white">Indus Wok Night Closing Stock Audit</h2>
               <span className="text-[11px] text-slate-400 font-mono bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">
                 {selectedDate} (23:30 PM)
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Weigh pending chicken tubs, snap a photo of the scale, and log closing numbers.
+              Weigh pending chicken tubs on the digital scale, snap a photo, and lock closing inventory.
             </p>
           </div>
         </div>
@@ -191,7 +179,7 @@ export const NightClosingTab = () => {
       {savedSuccess && (
         <div className="p-3.5 bg-emerald-950/40 border border-emerald-500/40 rounded-xl text-emerald-400 text-xs font-bold flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>Night closing stock saved! Morning opening team can now cross-verify.</span>
+          <span>Night closing stock saved! Morning shift can now inspect the scale photo and reconcile.</span>
         </div>
       )}
 
@@ -226,7 +214,7 @@ export const NightClosingTab = () => {
         <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl flex items-center gap-2.5">
           <Scale className="w-4 h-4 text-emerald-400 shrink-0" />
           <div>
-            <label className="text-[9px] uppercase font-bold text-slate-400 block">Total Meat</label>
+            <label className="text-[9px] uppercase font-bold text-slate-400 block">Total Pending Meat</label>
             <span className="text-xs sm:text-sm font-extrabold text-white">{totalWeightKg} KG</span>
           </div>
         </div>
@@ -240,7 +228,7 @@ export const NightClosingTab = () => {
         </div>
       </div>
 
-      {/* Main Form: Itemized Weight Grid & Scale Photo Visualizer */}
+      {/* Main Grid: Form Inputs vs AI Scale Photo OCR */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left (7 Cols): Itemized Input Cards */}
         <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
@@ -304,7 +292,7 @@ export const NightClosingTab = () => {
                   value={notes[item.id] || ''}
                   onChange={(e) => setNotes({ ...notes, [item.id]: e.target.value })}
                   className="w-full bg-slate-900/70 border border-slate-700/60 rounded-lg px-2.5 py-1 text-[10px] text-slate-300 focus:outline-none focus:border-orange-500"
-                  placeholder="e.g. Chiller tub #2, Marinated for tomorrow"
+                  placeholder="e.g. Weighed in blue tub on ATOM scale"
                 />
               </div>
             ))}
@@ -316,50 +304,14 @@ export const NightClosingTab = () => {
           </div>
         </div>
 
-        {/* Right (5 Cols): Scale Photo & WhatsApp Live Preview */}
+        {/* Right (5 Cols): Scale Photo OCR Component & WhatsApp Broadcast */}
         <div className="lg:col-span-5 space-y-4">
-          {/* Visual Weighing Scale Photo Container */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Camera className="w-4 h-4 text-orange-400" />
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Scale & Chiller Photo
-                </h3>
-              </div>
-              <button
-                onClick={handleGenerateScalePhoto}
-                className="text-[10px] font-bold text-orange-400 hover:text-orange-300 flex items-center gap-1"
-              >
-                <RefreshCw className="w-3 h-3" /> Refresh Scale
-              </button>
-            </div>
-
-            <div className="rounded-xl overflow-hidden border border-slate-700/70 bg-slate-950 flex items-center justify-center min-h-[160px] max-h-[220px]">
-              <img
-                src={photoUrl || createScalePhotoSvg('Pending Night Chicken Stock', totalWeightKg, `${selectedDate} 23:45`, chillerTemp)}
-                alt="Night Closing Scale View"
-                className="w-full h-full object-contain max-h-[200px]"
-              />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <label className="cursor-pointer text-xs bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 px-3 py-2 rounded-xl border border-slate-700 flex items-center gap-1.5 transition-all">
-                <Upload className="w-3.5 h-3.5 text-orange-400" />
-                <span>📷 Snap / Upload Photo</span>
-                {/* Mobile Camera Support */}
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  capture="environment" 
-                  onChange={handleCustomUpload} 
-                  className="hidden" 
-                />
-              </label>
-
-              <span className="text-[10px] text-slate-400 font-mono">23:45 PM</span>
-            </div>
-          </div>
+          {/* AI Scale Photo Uploader with real camera support & OCR */}
+          <ScalePhotoUploader
+            currentPhotoUrl={photoUrl}
+            onPhotoUploaded={(url) => setPhotoUrl(url)}
+            onWeightDetected={handleWeightDetectedFromOcr}
+          />
 
           {/* Formatted WhatsApp Output Preview */}
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-2">

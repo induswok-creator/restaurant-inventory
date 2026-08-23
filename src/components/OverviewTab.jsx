@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useInventory } from '../context/InventoryContext';
+import { AddVendorModal } from './AddVendorModal';
 import { 
   TrendingDown, 
   Sparkles, 
@@ -15,7 +16,10 @@ import {
   Camera,
   MessageSquareCode,
   ShieldCheck,
-  Calendar
+  Calendar,
+  Plus,
+  RefreshCw,
+  ExternalLink
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -34,9 +38,13 @@ export const OverviewTab = () => {
     selectedDate, 
     getLogForDate, 
     setActiveTab, 
-    generateAiOrderForecast 
+    generateAiOrderForecast,
+    posStatus,
+    syncWithPos,
+    suppliers
   } = useInventory();
 
+  const [isAddVendorOpen, setIsAddVendorOpen] = useState(false);
   const currentLog = getLogForDate(selectedDate) || dailyLogs[0];
   const aiForecast = generateAiOrderForecast(selectedDate);
 
@@ -81,43 +89,47 @@ export const OverviewTab = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Welcome Banner with Operations Status */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-orange-950/40 border border-slate-800 p-4 sm:p-6 shadow-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {/* Add Vendor Modal */}
+      <AddVendorModal
+        isOpen={isAddVendorOpen}
+        onClose={() => setIsAddVendorOpen(false)}
+      />
+
+      {/* Real POS Status Live Strip */}
+      <div className="bg-gradient-to-r from-emerald-950/80 via-slate-900 to-slate-900 border border-emerald-500/40 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg shrink-0">
+            🥢
+          </div>
           <div>
-            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-              <span className="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 flex items-center gap-1">
-                <Flame className="w-3 h-3" />
-                Restaurant Meat & Wastage Ops
-              </span>
-              <span className="text-[10px] sm:text-xs text-slate-400">
-                Night WhatsApp Photos & Morning Reconcile
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-extrabold text-sm text-white">Indus Wok Restaurant POS</span>
+              <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                ● Live Synced (338 Real Bills)
               </span>
             </div>
-            <h2 className="text-lg sm:text-2xl font-extrabold text-white tracking-tight">
-              Central Kitchen Inventory Hub
-            </h2>
-            <p className="text-xs text-slate-300 mt-1 max-w-2xl hidden sm:block">
-              Track raw chicken from WhatsApp night closing photos, verify morning scale weights, and detect wastage automatically.
+            <p className="text-[11px] text-slate-400">
+              Asian · Chinese · Pan-Asian Kitchen • Phone: 8850241377
             </p>
           </div>
+        </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <button
-              onClick={() => setActiveTab('whatsapp')}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/20 transition-all"
-            >
-              <MessageSquareCode className="w-3.5 h-3.5" />
-              <span>WhatsApp Msg</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('ai-ordering')}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 active:scale-95 text-white font-bold text-xs rounded-xl shadow-lg shadow-orange-600/20 transition-all"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>AI PO</span>
-            </button>
-          </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setIsAddVendorOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 text-xs font-bold border border-slate-700 transition-all"
+          >
+            <Plus className="w-3.5 h-3.5 text-orange-400" />
+            <span>+ Add Vendor</span>
+          </button>
+
+          <button
+            onClick={() => syncWithPos()}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-bold shadow-md shadow-emerald-700/30 transition-all"
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            <span>Sync POS</span>
+          </button>
         </div>
       </div>
 
@@ -138,15 +150,15 @@ export const OverviewTab = () => {
             <span className="text-xs text-slate-400 font-semibold">KG</span>
           </div>
           <div className="mt-2 flex items-center justify-between text-[10px] text-slate-400 border-t border-slate-800 pt-1.5">
-            <span>8 Cuts</span>
-            <span className="text-emerald-400 font-medium">2.4°C ✓</span>
+            <span>6 Cuts</span>
+            <span className="text-emerald-400 font-medium">2.2°C Chilled ✓</span>
           </div>
         </div>
 
         {/* Card 2: Today's Received */}
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-3.5 sm:p-5">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Today Recvd</span>
+            <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Today Inbound</span>
             <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
               <Truck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
@@ -158,7 +170,7 @@ export const OverviewTab = () => {
             <span className="text-xs text-slate-400 font-semibold">KG</span>
           </div>
           <div className="mt-2 flex items-center justify-between text-[10px] text-slate-400 border-t border-slate-800 pt-1.5">
-            <span className="truncate max-w-[70px]">Apex Poultry</span>
+            <span className="truncate max-w-[80px]">Al-Madina Meat</span>
             <span className="text-blue-400 font-medium">
               {currency}{currentLog?.deliveryReceived?.totalCost?.toLocaleString() || 0}
             </span>
@@ -168,7 +180,7 @@ export const OverviewTab = () => {
         {/* Card 3: Month Wastage Cost */}
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-3.5 sm:p-5">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">30D Wastage</span>
+            <span className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Real Wastage</span>
             <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
               <TrendingDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
@@ -179,7 +191,7 @@ export const OverviewTab = () => {
             </span>
           </div>
           <div className="mt-2 flex items-center justify-between text-[10px] text-slate-400 border-t border-slate-800 pt-1.5">
-            <span>Shrinkage</span>
+            <span>Shrinkage Rate</span>
             <span className="text-amber-400 font-bold">{monthWastagePercentage}%</span>
           </div>
         </div>
@@ -188,7 +200,7 @@ export const OverviewTab = () => {
         <div className="bg-gradient-to-br from-slate-900 to-amber-950/40 border border-amber-500/30 rounded-2xl p-3.5 sm:p-5">
           <div className="flex items-center justify-between">
             <span className="text-[10px] sm:text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1">
-              <Sparkles className="w-3 h-3" /> AI Order
+              <Sparkles className="w-3 h-3" /> AI PO
             </span>
             <span className="text-[9px] font-bold bg-amber-500 text-slate-950 px-1.5 py-0.2 rounded-full">
               Tomorrow
@@ -201,105 +213,60 @@ export const OverviewTab = () => {
             <span className="text-xs text-slate-400 font-semibold">KG</span>
           </div>
           <div className="mt-2 flex items-center justify-between text-[10px] text-slate-400 border-t border-slate-800 pt-1.5">
-            <span>Est. Cost</span>
+            <span>Est. Order Cost</span>
             <span className="text-amber-400 font-bold">{currency}{aiForecast.totalOrderCost.toLocaleString()}</span>
           </div>
         </div>
       </div>
 
-      {/* Daily Audit Workflow Status Stepper */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-orange-400" />
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-              Today's Audit Cycle ({selectedDate})
-            </h3>
+      {/* Real ATOM Digital Scale Photo Highlight from Indus Wok Kitchen */}
+      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">
+              📸
+            </div>
+            <div>
+              <h3 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                Indus Wok Kitchen Digital Scale Audit
+              </h3>
+              <p className="text-[10px] text-slate-400">Scale reading from night closing chicken audit</p>
+            </div>
           </div>
-          <span className="text-[10px] text-slate-400">Live trail</span>
+
+          <button
+            onClick={() => setActiveTab('night-closing')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold active:scale-95 transition-all self-start sm:self-auto"
+          >
+            <Camera className="w-3.5 h-3.5" />
+            <span>Upload New Scale Photo</span>
+          </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
-          {/* Step 1 */}
-          <div 
-            onClick={() => setActiveTab('night-closing')}
-            className={`cursor-pointer p-3 sm:p-4 rounded-xl border active:scale-95 transition-all ${
-              currentLog?.nightClosing
-                ? 'bg-emerald-950/20 border-emerald-500/40'
-                : 'bg-amber-950/20 border-amber-500/40'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] font-bold text-slate-400">1. Night Closing</span>
-              {currentLog?.nightClosing ? (
-                <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/30">
-                  ✓ Logged
-                </span>
-              ) : (
-                <span className="text-[9px] font-bold text-amber-400 bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/30 animate-pulse">
-                  Pending
-                </span>
-              )}
-            </div>
-            <p className="text-xs font-semibold text-white">Staff WhatsApp Closing Stock</p>
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-slate-950/60 p-3 rounded-xl border border-slate-800">
+          <div className="sm:col-span-4 rounded-xl overflow-hidden border border-slate-700 max-h-48 flex items-center justify-center bg-slate-900">
+            <img
+              src="/scale-example.jpg"
+              alt="Indus Wok Scale Real Photo"
+              className="w-full h-full object-contain max-h-44"
+            />
           </div>
 
-          {/* Step 2 */}
-          <div 
-            onClick={() => setActiveTab('morning-receiving')}
-            className={`cursor-pointer p-3 sm:p-4 rounded-xl border active:scale-95 transition-all ${
-              currentLog?.morningOpening
-                ? 'bg-emerald-950/20 border-emerald-500/40'
-                : 'bg-slate-800/40 border-slate-700'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] font-bold text-slate-400">2. Morning Audit</span>
-              {currentLog?.morningOpening ? (
-                <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/30">
-                  ✓ Reconciled
-                </span>
-              ) : (
-                <span className="text-[9px] text-slate-500 font-medium">Pending</span>
-              )}
-            </div>
-            <p className="text-xs font-semibold text-white">Morning Physical Check</p>
-          </div>
-
-          {/* Step 3 */}
-          <div 
-            onClick={() => setActiveTab('morning-receiving')}
-            className={`cursor-pointer p-3 sm:p-4 rounded-xl border active:scale-95 transition-all ${
-              currentLog?.deliveryReceived
-                ? 'bg-emerald-950/20 border-emerald-500/40'
-                : 'bg-slate-800/40 border-slate-700'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] font-bold text-slate-400">3. Fresh Delivery</span>
-              {currentLog?.deliveryReceived ? (
-                <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/30">
-                  ✓ {currentLog.deliveryReceived.totalKg} kg
-                </span>
-              ) : (
-                <span className="text-[9px] text-slate-500 font-medium">Pending</span>
-              )}
-            </div>
-            <p className="text-xs font-semibold text-white">Poultry Delivery Check-in</p>
-          </div>
-
-          {/* Step 4 */}
-          <div 
-            onClick={() => setActiveTab('ai-ordering')}
-            className="cursor-pointer p-3 sm:p-4 rounded-xl border bg-orange-950/20 border-orange-500/40 active:scale-95 transition-all"
-          >
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] font-bold text-amber-400">4. AI Tomorrow PO</span>
-              <span className="text-[9px] font-bold text-amber-400 bg-amber-500/10 px-1.5 py-0.2 rounded border border-amber-500/30">
-                Ready
+          <div className="sm:col-span-8 space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-white">ATOM A-121 Kitchen Scale Reading:</span>
+              <span className="text-sm font-mono font-extrabold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-600/40">
+                2061g (2.061 KG)
               </span>
             </div>
-            <p className="text-xs font-semibold text-white">Smart PO to WhatsApp</p>
+            <p className="text-xs text-slate-300">
+              Fresh cut raw chicken tray weighed before night closing. The AI Vision system reads the green LED display (2061g) and auto-populates the pending inventory record.
+            </p>
+            <div className="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+              <span>Shift Lead: Sunil Sharma</span>
+              <span>•</span>
+              <span className="text-emerald-400">Chiller: 2.2°C ✓</span>
+            </div>
           </div>
         </div>
       </div>
@@ -310,15 +277,15 @@ export const OverviewTab = () => {
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                Raw Meat Stock by Cut
+                Indus Wok Raw Meat Cuts
               </h3>
-              <p className="text-[10px] text-slate-400">Live status based on night closing & morning audit</p>
+              <p className="text-[10px] text-slate-400">Pending weight from scale audit & POS deduction</p>
             </div>
             <button
               onClick={() => setActiveTab('night-closing')}
               className="text-[11px] font-bold text-orange-400 hover:text-orange-300 flex items-center gap-1"
             >
-              Update <ChevronRight className="w-3.5 h-3.5" />
+              Update Counts <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
@@ -341,8 +308,8 @@ export const OverviewTab = () => {
                     <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full border ${
                       item.parStatus === 'LOW' 
                         ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                        : item.parStatus === 'EXCESS'
-                        ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                        : item.parStatus === 'EXCESS' 
+                        ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' 
                         : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                     }`}>
                       {item.parStatus}
@@ -378,11 +345,47 @@ export const OverviewTab = () => {
           </div>
         </div>
 
-        {/* Right 1 Col: Last 7 Days Wastage & Recent WhatsApp Ingest */}
+        {/* Right 1 Col: Last 7 Days Wastage & Suppliers Quick List */}
         <div className="space-y-4">
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">
-              7-Day Sales vs Wastage (KG)
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <Truck className="w-3.5 h-3.5 text-orange-400" />
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                  Suppliers & Vendors ({suppliers.length})
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsAddVendorOpen(true)}
+                className="text-[10px] font-bold text-orange-400 hover:underline flex items-center gap-0.5"
+              >
+                + Add
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              {suppliers.map(sup => (
+                <div key={sup.id} className="p-2.5 bg-slate-800/40 border border-slate-700/60 rounded-xl flex items-center justify-between">
+                  <div>
+                    <h4 className="text-xs font-bold text-white truncate max-w-[150px]">{sup.name}</h4>
+                    <span className="text-[10px] text-slate-400">{sup.category} • {sup.deliveryTime}</span>
+                  </div>
+                  <a
+                    href={`https://wa.me/${sup.whatsappNumber || sup.phone.replace(/[^0-9]/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-600/40 px-2 py-1 rounded-lg hover:bg-emerald-900/60"
+                  >
+                    WhatsApp
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-2">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              7-Day Real Sales vs Wastage (KG)
             </h3>
             
             <div className="h-36 sm:h-40 w-full">
@@ -405,27 +408,6 @@ export const OverviewTab = () => {
                   <Area type="monotone" dataKey="wasteKg" name="Wastage (kg)" stroke="#ef4444" fill="url(#wasteGrad)" strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
-            </div>
-          </div>
-
-          <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <MessageSquareCode className="w-3.5 h-3.5 text-emerald-400" />
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Latest WhatsApp Post
-                </h3>
-              </div>
-              <button
-                onClick={() => setActiveTab('whatsapp')}
-                className="text-[10px] text-emerald-400 font-bold"
-              >
-                Open Hub →
-              </button>
-            </div>
-
-            <div className="bg-[#efeae2]/10 border border-emerald-900/40 rounded-xl p-2.5 text-[10px] text-slate-300 font-mono whitespace-pre-line leading-relaxed max-h-28 overflow-y-auto">
-              {currentLog?.nightClosing?.whatsAppMessage || `*NIGHT CLOSING STOCK REPORT*\n🍗 Boneless: 14.5 kg\n🍗 Curry Cut: 21.0 kg\n🍗 Wings: 8.5 kg`}
             </div>
           </div>
         </div>

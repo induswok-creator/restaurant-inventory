@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useInventory } from '../context/InventoryContext';
+import { AddVendorModal } from './AddVendorModal';
 import { 
   LayoutDashboard, 
   MessageSquareCode, 
@@ -18,7 +19,9 @@ import {
   Calendar,
   ChevronRight,
   ShieldCheck,
-  Flame
+  Flame,
+  Plus,
+  Truck
 } from 'lucide-react';
 
 export const Layout = ({ children }) => {
@@ -30,10 +33,12 @@ export const Layout = ({ children }) => {
     currency, 
     setCurrency, 
     resetToDemoData,
-    dailyLogs 
+    dailyLogs,
+    posStatus
   } = useInventory();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAddVendorOpen, setIsAddVendorOpen] = useState(false);
 
   // Find latest log for pending status indicators
   const latestLog = dailyLogs[0];
@@ -46,11 +51,11 @@ export const Layout = ({ children }) => {
     { id: 'whatsapp', label: 'WhatsApp Hub & OCR', icon: MessageSquareCode, badge: 'Live AI' },
     { id: 'night-closing', label: 'Night Closing Stock', icon: Moon, badge: hasNightClosing ? 'Done' : 'Pending' },
     { id: 'morning-receiving', label: 'Morning & Delivery', icon: Sun, badge: (hasMorningOpening && hasDelivery) ? 'Done' : 'Pending' },
-    { id: 'sales-usage', label: 'Kitchen Sales & Recipes', icon: ChefHat, badge: null },
+    { id: 'sales-usage', label: 'Kitchen Sales & Recipes', icon: ChefHat, badge: 'POS Sync' },
     { id: 'wastage', label: 'Wastage Analytics', icon: TrendingDown, badge: 'Insights' },
     { id: 'ai-ordering', label: 'AI Smart Ordering', icon: Sparkles, badge: 'Smart PO' },
-    { id: 'monthly-report', label: 'End-of-Month Report', icon: FileSpreadsheet, badge: '30 Days' },
-    { id: 'catalog', label: 'Items & Recipes', icon: UtensilsCrossed, badge: null },
+    { id: 'monthly-report', label: 'End-of-Month Report', icon: FileSpreadsheet, badge: 'POS Data' },
+    { id: 'catalog', label: 'Items & Vendors', icon: UtensilsCrossed, badge: null },
     { id: 'settings', label: 'Settings', icon: Settings, badge: null },
   ];
 
@@ -61,28 +66,34 @@ export const Layout = ({ children }) => {
 
   return (
     <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* Desktop Sidebar (hidden on mobile, visible on lg screens) */}
+      {/* Global Add Vendor Modal */}
+      <AddVendorModal
+        isOpen={isAddVendorOpen}
+        onClose={() => setIsAddVendorOpen(false)}
+      />
+
+      {/* Desktop Sidebar */}
       <aside className="hidden lg:flex w-72 bg-slate-900/95 border-r border-slate-800/80 flex-col justify-between shrink-0">
         <div>
           {/* Logo & Brand Header */}
           <div className="p-5 border-b border-slate-800 flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 flex items-center justify-center shadow-lg shadow-orange-500/20 text-white font-extrabold text-xl">
-              🐔
+              🥢
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base tracking-tight text-white">PoultryPulse</span>
+                <span className="font-extrabold text-base tracking-tight text-white">Indus Wok</span>
                 <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950">AI</span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Restaurant Meat & Wastage Ops</p>
+              <p className="text-xs text-slate-400 font-medium">Meat Inventory & POS Hub</p>
             </div>
           </div>
 
-          {/* Date Selector & Branch Quick Switcher */}
+          {/* Date Selector */}
           <div className="px-4 py-3 bg-slate-900/50 border-b border-slate-800/60">
             <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
               <span className="font-semibold uppercase tracking-wider text-[11px] text-slate-400">Audit Date</span>
-              <span className="text-amber-400 font-mono text-[11px]">Today: Aug 24</span>
+              <span className="text-amber-400 font-mono text-[11px]">Today: {selectedDate}</span>
             </div>
             <input
               type="date"
@@ -93,7 +104,7 @@ export const Layout = ({ children }) => {
           </div>
 
           {/* Navigation Links */}
-          <nav className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-270px)]">
+          <nav className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-290px)]">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -132,9 +143,17 @@ export const Layout = ({ children }) => {
           </nav>
         </div>
 
-        {/* Footer info & Demo Reset */}
-        <div className="p-3 border-t border-slate-800 bg-slate-900/60">
-          <div className="flex items-center justify-between mb-2 px-1">
+        {/* Footer info & Add Vendor Button */}
+        <div className="p-3 border-t border-slate-800 bg-slate-900/60 space-y-2">
+          <button
+            onClick={() => setIsAddVendorOpen(true)}
+            className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold shadow-md shadow-orange-600/30 transition-all"
+          >
+            <Plus className="w-4 h-4" />
+            <span>+ Add Supplier / Vendor</span>
+          </button>
+
+          <div className="flex items-center justify-between px-1">
             <span className="text-[11px] text-slate-400 font-medium">Currency:</span>
             <div className="flex bg-slate-800 rounded-md p-0.5 border border-slate-700">
               {['₹', '$', '£', '€', 'AED'].map((cur) => (
@@ -150,18 +169,6 @@ export const Layout = ({ children }) => {
               ))}
             </div>
           </div>
-
-          <button
-            onClick={() => {
-              if (confirm('Reset to 30-day realistic demo dataset?')) {
-                resetToDemoData();
-              }
-            }}
-            className="w-full flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-[11px] border border-slate-700/60 transition-colors"
-          >
-            <RotateCcw className="w-3 h-3" />
-            <span>Reload 30-Day Demo Data</span>
-          </button>
         </div>
       </aside>
 
@@ -181,26 +188,29 @@ export const Layout = ({ children }) => {
 
             {/* Mobile Brand Logo */}
             <div className="flex items-center gap-2 lg:hidden">
-              <span className="text-xl">🐔</span>
-              <span className="font-extrabold text-sm tracking-tight text-white">PoultryPulse</span>
+              <span className="text-xl">🥢</span>
+              <span className="font-extrabold text-sm tracking-tight text-white">Indus Wok</span>
               <span className="text-[9px] bg-orange-500 text-slate-950 font-bold px-1 rounded">AI</span>
             </div>
 
             {/* Desktop Branch Title */}
             <h1 className="hidden lg:flex items-center gap-2 text-base font-bold text-white tracking-tight">
-              <span>The Tandoor & Grill Central Kitchen</span>
-              <span className="text-xs font-normal text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">
-                Live Ops: {selectedDate}
+              <span>Indus Wok Kitchen</span>
+              <span className="text-xs font-normal text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-600/40">
+                POS Connected · 338 Live Bills
               </span>
             </h1>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* WhatsApp Quick Status */}
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/40 border border-emerald-600/40 text-emerald-400 text-xs font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>WhatsApp Synced</span>
-            </div>
+            {/* Add Vendor Quick Button */}
+            <button
+              onClick={() => setIsAddVendorOpen(true)}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 text-xs font-bold border border-slate-700 transition-all"
+            >
+              <Plus className="w-3.5 h-3.5 text-orange-400" />
+              <span>+ Vendor</span>
+            </button>
 
             {/* Quick Ingest Button */}
             <button
@@ -214,7 +224,7 @@ export const Layout = ({ children }) => {
           </div>
         </header>
 
-        {/* Scrollable View Area (with bottom padding on mobile for iPhone navigation bar) */}
+        {/* Scrollable View Area */}
         <main className="flex-1 overflow-y-auto p-3 sm:p-6 pb-24 sm:pb-20 lg:pb-6 bg-slate-950 ios-scroll">
           <div className="max-w-7xl mx-auto w-full">
             {children}
@@ -284,27 +294,25 @@ export const Layout = ({ children }) => {
         </nav>
       </div>
 
-      {/* Mobile Slide-in Drawer Sheet (Full Menu for iPhone/Mobile) */}
+      {/* Mobile Slide-in Drawer Sheet */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex">
-          {/* Backdrop */}
           <div 
             onClick={() => setMobileMenuOpen(false)}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
           />
 
-          {/* Drawer Body */}
           <div className="relative w-4/5 max-w-sm bg-slate-900 h-full flex flex-col justify-between border-r border-slate-800 shadow-2xl z-10 pt-safe pb-safe">
             <div>
               {/* Drawer Header */}
               <div className="p-4 border-b border-slate-800 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-orange-600 flex items-center justify-center text-lg font-bold text-white shadow-md">
-                    🐔
+                    🥢
                   </div>
                   <div>
-                    <h3 className="text-sm font-extrabold text-white">PoultryPulse AI</h3>
-                    <p className="text-[10px] text-slate-400">Meat Inventory & Wastage Ops</p>
+                    <h3 className="text-sm font-extrabold text-white">Indus Wok</h3>
+                    <p className="text-[10px] text-slate-400">Meat Inventory & POS Hub</p>
                   </div>
                 </div>
 
@@ -316,15 +324,18 @@ export const Layout = ({ children }) => {
                 </button>
               </div>
 
-              {/* Date Changer */}
+              {/* Quick Add Vendor in Drawer */}
               <div className="p-3 bg-slate-950/60 border-b border-slate-800">
-                <label className="text-[10px] uppercase font-bold text-slate-400 block mb-1">Audit Date</label>
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 font-semibold"
-                />
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setIsAddVendorOpen(true);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 text-white text-xs font-bold shadow-md shadow-orange-600/30"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>+ Add Supplier / Vendor</span>
+                </button>
               </div>
 
               {/* Navigation List */}
@@ -375,19 +386,6 @@ export const Layout = ({ children }) => {
                   ))}
                 </div>
               </div>
-
-              <button
-                onClick={() => {
-                  if (confirm('Reload 30-day realistic demo data?')) {
-                    resetToDemoData();
-                    setMobileMenuOpen(false);
-                  }
-                }}
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Reload 30-Day Demo Data</span>
-              </button>
             </div>
           </div>
         </div>
