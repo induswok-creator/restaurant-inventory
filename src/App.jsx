@@ -2,6 +2,7 @@ import React from 'react';
 import { InventoryProvider, useInventory } from './context/InventoryContext';
 import { Layout } from './components/Layout';
 import { OverviewTab } from './components/OverviewTab';
+import { PurchaseLedgerTab } from './components/PurchaseLedgerTab';
 import { WhatsAppHubTab } from './components/WhatsAppHubTab';
 import { NightClosingTab } from './components/NightClosingTab';
 import { MorningReceivingTab } from './components/MorningReceivingTab';
@@ -18,6 +19,7 @@ const AppContent = () => {
   return (
     <Layout>
       {activeTab === 'overview' && <OverviewTab />}
+      {activeTab === 'purchase-ledger' && <PurchaseLedgerTab />}
       {activeTab === 'whatsapp' && <WhatsAppHubTab />}
       {activeTab === 'night-closing' && <NightClosingTab />}
       {activeTab === 'morning-receiving' && <MorningReceivingTab />}

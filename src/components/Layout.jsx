@@ -21,7 +21,8 @@ import {
   ShieldCheck,
   Flame,
   Plus,
-  Truck
+  Truck,
+  Receipt
 } from 'lucide-react';
 
 export const Layout = ({ children }) => {
@@ -32,7 +33,6 @@ export const Layout = ({ children }) => {
     setSelectedDate, 
     currency, 
     setCurrency, 
-    resetToDemoData,
     dailyLogs,
     posStatus
   } = useInventory();
@@ -40,7 +40,6 @@ export const Layout = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isAddVendorOpen, setIsAddVendorOpen] = useState(false);
 
-  // Find latest log for pending status indicators
   const latestLog = dailyLogs[0];
   const hasNightClosing = !!latestLog?.nightClosing;
   const hasMorningOpening = !!latestLog?.morningOpening;
@@ -48,6 +47,7 @@ export const Layout = ({ children }) => {
 
   const navItems = [
     { id: 'overview', label: 'Dashboard', icon: LayoutDashboard, badge: null },
+    { id: 'purchase-ledger', label: 'Bills & Purchase Ledger', icon: Receipt, badge: '₹1.95L' },
     { id: 'whatsapp', label: 'WhatsApp Hub & OCR', icon: MessageSquareCode, badge: 'Live AI' },
     { id: 'night-closing', label: 'Night Closing Stock', icon: Moon, badge: hasNightClosing ? 'Done' : 'Pending' },
     { id: 'morning-receiving', label: 'Morning & Delivery', icon: Sun, badge: (hasMorningOpening && hasDelivery) ? 'Done' : 'Pending' },
@@ -197,7 +197,7 @@ export const Layout = ({ children }) => {
             <h1 className="hidden lg:flex items-center gap-2 text-base font-bold text-white tracking-tight">
               <span>Indus Wok Kitchen</span>
               <span className="text-xs font-normal text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-600/40">
-                POS Connected · 338 Live Bills
+                POS Connected · 338 Live Bills · ₹1.95L Ledger
               </span>
             </h1>
           </div>
@@ -244,14 +244,13 @@ export const Layout = ({ children }) => {
           </button>
 
           <button
-            onClick={() => setActiveTab('whatsapp')}
-            className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all relative ${
-              activeTab === 'whatsapp' ? 'text-emerald-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+            onClick={() => setActiveTab('purchase-ledger')}
+            className={`flex flex-col items-center justify-center p-1.5 rounded-xl transition-all ${
+              activeTab === 'purchase-ledger' ? 'text-orange-400 font-bold' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <span className="absolute -top-1 right-2 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <MessageSquareCode className={`w-5 h-5 ${activeTab === 'whatsapp' ? 'stroke-[2.5]' : ''}`} />
-            <span className="text-[10px] mt-0.5">WhatsApp</span>
+            <Receipt className={`w-5 h-5 ${activeTab === 'purchase-ledger' ? 'stroke-[2.5]' : ''}`} />
+            <span className="text-[10px] mt-0.5">Bills</span>
           </button>
 
           <button
