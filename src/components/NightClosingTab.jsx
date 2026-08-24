@@ -11,12 +11,13 @@ import {
   Copy, 
   ThermometerSnowflake, 
   User, 
-  FileText,
-  Upload,
-  RefreshCw,
-  Scale,
-  Plus,
-  Minus
+  FileText, 
+  Upload, 
+  RefreshCw, 
+  Scale, 
+  Plus, 
+  Minus, 
+  Clock 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -27,8 +28,7 @@ export const NightClosingTab = () => {
     selectedDate, 
     getLogForDate, 
     logNightClosing, 
-    currency,
-    setActiveTab
+    currency 
   } = useInventory();
 
   const currentLog = getLogForDate(selectedDate);
@@ -50,7 +50,7 @@ export const NightClosingTab = () => {
   const [notes, setNotes] = useState(() => {
     const init = {};
     items.forEach(it => {
-      init[it.id] = existingClosing?.items?.[it.id]?.notes || 'Weighed in blue tub on ATOM scale';
+      init[it.id] = existingClosing?.items?.[it.id]?.notes || 'Weighed on ATOM kitchen scale';
     });
     return init;
   });
@@ -59,7 +59,6 @@ export const NightClosingTab = () => {
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
 
-  // Sync state if existing closing updates
   useEffect(() => {
     if (existingClosing) {
       setStaffName(existingClosing.staff || 'Sunil Sharma (Indus Wok Shift Lead)');
@@ -70,7 +69,7 @@ export const NightClosingTab = () => {
         updatedCounts[it.id] = existingClosing.items?.[it.id]?.weight !== undefined 
           ? existingClosing.items[it.id].weight 
           : (it.id === 'chk-boneless' ? 2.06 : (it.minParKg * 0.85).toFixed(1));
-        updatedNotes[it.id] = existingClosing.items?.[it.id]?.notes || 'Weighed on ATOM digital scale';
+        updatedNotes[it.id] = existingClosing.items?.[it.id]?.notes || 'Weighed on ATOM scale';
       });
       setStockCounts(updatedCounts);
       setNotes(updatedNotes);
@@ -78,7 +77,6 @@ export const NightClosingTab = () => {
     }
   }, [selectedDate, existingClosing]);
 
-  // Total weight
   const totalWeightKg = Number(Object.values(stockCounts).reduce((a, b) => Number(a) + (Number(b) || 0), 0).toFixed(2));
   const totalEstimatedCost = Math.round(items.reduce((acc, it) => acc + ((Number(stockCounts[it.id]) || 0) * it.defaultCostPerUnit), 0));
 
@@ -88,7 +86,6 @@ export const NightClosingTab = () => {
     setStockCounts({ ...stockCounts, [itemId]: nextVal });
   };
 
-  // When AI Scale OCR detects weight from photo
   const handleWeightDetectedFromOcr = (detectedWeightKg) => {
     setStockCounts(prev => ({
       ...prev,
@@ -96,17 +93,17 @@ export const NightClosingTab = () => {
     }));
   };
 
-  // Format WhatsApp message
-  const generatedWhatsAppMsg = `*INDUS WOK NIGHT CLOSING STOCK - ${selectedDate}*\n` +
-    `🥢 Restaurant: Indus Wok Kitchen\n` +
-    `📅 Time: 23:45 PM | Supervisor: ${staffName}\n` +
+  // Formatted WhatsApp message for 04:00 AM closing
+  const generatedWhatsAppMsg = `*INDUS WOK LATE-NIGHT CLOSING STOCK AUDIT*\n` +
+    `🥢 Restaurant: Indus Wok (Timings: 4:00 PM – 4:00 AM)\n` +
+    `📅 Shift Date: ${selectedDate} | Logged: 04:00 AM (Kitchen Close)\n` +
+    `👤 Duty Lead: ${staffName}\n` +
     `❄️ Walk-in Chiller Temp: ${chillerTemp} (HACCP Verified)\n\n` +
     `🍗 *Pending Chicken Cuts Weighed on Scale:*\n` +
     items.map(it => `• ${it.name}: *${stockCounts[it.id] || 0} ${it.unit}* (${notes[it.id] || 'Chilled'})`).join('\n') +
     `\n\n📊 *Total Pending Stock: ${totalWeightKg} kg* (Est. Value: ${currency}${totalEstimatedCost.toLocaleString()})\n` +
-    `📸 ATOM Digital Scale Photo attached for audit. Morning crew please inspect tray weights.`;
+    `📸 ATOM Digital Scale Photo attached. 03:30 PM opening crew please inspect tray weights before 4:00 PM opening.`;
 
-  // Save closing log
   const handleSave = () => {
     const structuredItems = {};
     items.forEach(it => {
@@ -122,7 +119,8 @@ export const NightClosingTab = () => {
       items: structuredItems,
       photoUrl: photoUrl || '/scale-example.jpg',
       whatsAppMessage: generatedWhatsAppMsg,
-      chillerTemp: chillerTemp
+      chillerTemp: chillerTemp,
+      timestamp: `${selectedDate} 04:00 AM`
     });
 
     setSavedSuccess(true);
@@ -146,13 +144,13 @@ export const NightClosingTab = () => {
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-base sm:text-lg font-bold text-white">Indus Wok Night Closing Stock Audit</h2>
-              <span className="text-[11px] text-slate-400 font-mono bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">
-                {selectedDate} (23:30 PM)
+              <h2 className="text-base sm:text-lg font-bold text-white">Indus Wok Late-Night Closing Audit</h2>
+              <span className="text-[11px] text-amber-400 font-mono bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
+                04:00 AM Close (Shift: 4 PM – 4 AM)
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Weigh pending chicken tubs on the digital scale, snap a photo, and lock closing inventory.
+              Weigh pending chicken tubs on the digital scale at 4:00 AM close, snap a photo, and lock closing inventory.
             </p>
           </div>
         </div>
@@ -171,7 +169,7 @@ export const NightClosingTab = () => {
             className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-lg shadow-orange-600/30 active:scale-95 transition-all"
           >
             <Save className="w-4 h-4" />
-            <span>Save Closing</span>
+            <span>Save 4:00 AM Closing</span>
           </button>
         </div>
       </div>
@@ -179,16 +177,16 @@ export const NightClosingTab = () => {
       {savedSuccess && (
         <div className="p-3.5 bg-emerald-950/40 border border-emerald-500/40 rounded-xl text-emerald-400 text-xs font-bold flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>Night closing stock saved! Morning shift can now inspect the scale photo and reconcile.</span>
+          <span>4:00 AM closing stock saved! 03:30 PM opening crew can inspect and cross-verify before 4:00 PM service.</span>
         </div>
       )}
 
-      {/* Meta Bar: Supervisor & Chiller Temperature */}
+      {/* Meta Bar */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl flex items-center gap-2.5">
           <User className="w-4 h-4 text-orange-400 shrink-0" />
           <div className="flex-1 min-w-0">
-            <label className="text-[9px] uppercase font-bold text-slate-400 block">Supervisor</label>
+            <label className="text-[9px] uppercase font-bold text-slate-400 block">Night Duty Lead</label>
             <input
               type="text"
               value={staffName}
@@ -220,21 +218,21 @@ export const NightClosingTab = () => {
         </div>
 
         <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl flex items-center gap-2.5">
-          <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+          <Clock className="w-4 h-4 text-amber-400 shrink-0" />
           <div>
-            <label className="text-[9px] uppercase font-bold text-slate-400 block">Stock Value</label>
-            <span className="text-xs sm:text-sm font-extrabold text-amber-400">{currency}{totalEstimatedCost.toLocaleString()}</span>
+            <label className="text-[9px] uppercase font-bold text-slate-400 block">Kitchen Hours</label>
+            <span className="text-xs sm:text-sm font-extrabold text-amber-400">4:00 PM – 4:00 AM</span>
           </div>
         </div>
       </div>
 
-      {/* Main Grid: Form Inputs vs AI Scale Photo OCR */}
+      {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Left (7 Cols): Itemized Input Cards */}
         <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-slate-800">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-              Pending Meat Stock by Cut
+              Pending Meat Stock by Cut (04:00 AM Scale Weighed)
             </h3>
             <span className="text-[10px] text-slate-400">Values in KG</span>
           </div>
@@ -254,7 +252,7 @@ export const NightClosingTab = () => {
                     </div>
                   </div>
 
-                  {/* Stepper & Input for Mobile */}
+                  {/* Stepper & Input */}
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
@@ -264,17 +262,15 @@ export const NightClosingTab = () => {
                       <Minus className="w-3 h-3" />
                     </button>
 
-                    <div className="relative">
-                      <input
-                        type="number"
-                        step="0.1"
-                        min="0"
-                        value={stockCounts[item.id] || ''}
-                        onChange={(e) => setStockCounts({ ...stockCounts, [item.id]: e.target.value })}
-                        className="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white font-mono font-bold text-center focus:outline-none focus:border-orange-500"
-                        placeholder="0.0"
-                      />
-                    </div>
+                    <input
+                      type="number"
+                      step="0.1"
+                      min="0"
+                      value={stockCounts[item.id] || ''}
+                      onChange={(e) => setStockCounts({ ...stockCounts, [item.id]: e.target.value })}
+                      className="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white font-mono font-bold text-center focus:outline-none focus:border-orange-500"
+                      placeholder="0.0"
+                    />
 
                     <button
                       type="button"
@@ -286,7 +282,6 @@ export const NightClosingTab = () => {
                   </div>
                 </div>
 
-                {/* Storage note */}
                 <input
                   type="text"
                   value={notes[item.id] || ''}
@@ -306,18 +301,16 @@ export const NightClosingTab = () => {
 
         {/* Right (5 Cols): Scale Photo OCR Component & WhatsApp Broadcast */}
         <div className="lg:col-span-5 space-y-4">
-          {/* AI Scale Photo Uploader with real camera support & OCR */}
           <ScalePhotoUploader
             currentPhotoUrl={photoUrl}
             onPhotoUploaded={(url) => setPhotoUrl(url)}
             onWeightDetected={handleWeightDetectedFromOcr}
           />
 
-          {/* Formatted WhatsApp Output Preview */}
           <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-2">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                💬 WhatsApp Broadcast Draft
+                💬 04:00 AM WhatsApp Broadcast
               </h3>
               <button
                 onClick={handleCopyWhatsApp}

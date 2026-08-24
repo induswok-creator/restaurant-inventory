@@ -29,87 +29,34 @@ export const WhatsAppHubTab = () => {
     logNightClosing, 
     logMorningOpening, 
     logDeliveryReceived, 
-    currency,
-    setActiveTab
+    currency 
   } = useInventory();
 
   // State for simulated WhatsApp input
-  const [inputText, setInputText] = useState(`*NIGHT CLOSING STOCK REPORT - ${selectedDate}*
-📅 Time: 23:45 PM | Logged by: Sunil (Night Shift Supervisor)
-❄️ Walk-in Chiller Temp: 2.3°C
+  const [inputText, setInputText] = useState(`*INDUS WOK LATE-NIGHT CLOSING STOCK AUDIT*\n📅 Shift Date: ${selectedDate} | Logged: 04:00 AM (Kitchen Close)\n👤 Lead: Sunil Sharma\n❄️ Walk-in Chiller Temp: 2.2°C\n\n🍗 *Pending Chicken on ATOM Scale:*\n• Chicken Boneless (Breast/Thigh): 2.06 kg\n• Chicken Lollipop / Wings: 2.25 kg\n• Chicken Curry Cut: 2.25 kg\n• Whole Broiler Chicken: 2.25 kg\n• Marinated Tikka Batches: 2.25 kg\n• Chicken Keema: 2.25 kg\n\n📸 ATOM Scale photo attached. 03:30 PM crew please verify.`);
 
-🍗 *Pending Raw Chicken Stock in Chiller:*
-• Boneless Breast: 16.5 kg
-• Bone-in Curry Cut: 24.2 kg
-• Chicken Wings: 9.8 kg
-• Chicken Drumsticks: 7.5 kg
-• Whole Broiler: 14.0 kg
-• Chicken Keema: 4.8 kg
-• Marinated Tikka: 6.2 kg
-
-📸 Scale photo attached for verification. Morning team please check tray #2.`);
-
-  const [senderName, setSenderName] = useState('Sunil (Night Supervisor)');
-  const [targetLogType, setTargetLogType] = useState('night'); // 'night' | 'morning' | 'delivery'
+  const [senderName, setSenderName] = useState('Sunil Sharma (Shift Lead)');
+  const [targetLogType, setTargetLogType] = useState('night');
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
 
-  // Parse in real-time as user types
   const parsedData = parseWhatsAppMessage(inputText);
 
-  // Quick preset messages
   const samplePresets = [
     {
-      label: '🌙 Night Closing (Standard)',
+      label: '🌙 04:00 AM Late-Night Close',
       type: 'night',
-      text: `*NIGHT CLOSING STOCK REPORT - ${selectedDate}*
-📅 Time: 23:45 PM | Logged by: Sunil (Night Shift Supervisor)
-❄️ Walk-in Chiller Temp: 2.3°C
-
-🍗 *Pending Raw Chicken Stock in Chiller:*
-• Boneless Breast: 16.5 kg
-• Bone-in Curry Cut: 24.2 kg
-• Chicken Wings: 9.8 kg
-• Chicken Drumsticks: 7.5 kg
-• Whole Broiler: 14.0 kg
-• Chicken Keema: 4.8 kg
-• Marinated Tikka: 6.2 kg
-
-📸 Scale photo attached for verification. Morning team please check tray #2.`
+      text: `*INDUS WOK LATE-NIGHT CLOSING STOCK AUDIT*\n📅 Shift Date: ${selectedDate} | Logged: 04:00 AM (Kitchen Close)\n👤 Lead: Sunil Sharma\n❄️ Walk-in Chiller Temp: 2.2°C\n\n🍗 *Pending Chicken on ATOM Scale:*\n• Chicken Boneless (Breast/Thigh): 2.06 kg\n• Chicken Lollipop / Wings: 2.25 kg\n• Chicken Curry Cut: 2.25 kg\n• Whole Broiler Chicken: 2.25 kg\n• Marinated Tikka Batches: 2.25 kg\n• Chicken Keema: 2.25 kg\n\n📸 ATOM Scale photo attached. 03:30 PM crew please verify.`
     },
     {
-      label: '☀️ Morning Reconcile',
+      label: '☀️ 03:30 PM Opening Reconcile',
       type: 'morning',
-      text: `*MORNING OPENING AUDIT - ${selectedDate}*
-☀️ Time: 08:30 AM | Receiver: Rajesh Kumar
-Chiller Temp: 2.1°C
-
-Pending Stock Verified on Scale:
-- Boneless Breast: 16.2 kg (0.3kg drip loss)
-- Bone-in Curry Cut: 23.9 kg
-- Chicken Wings: 9.6 kg
-- Drumsticks: 7.4 kg
-- Whole Broiler: 13.8 kg
-- Keema: 4.7 kg
-
-All trays smell fresh and properly chilled.`
+      text: `*INDUS WOK 03:30 PM OPENING AUDIT*\n☀️ Shift Date: ${selectedDate} | Time: 03:30 PM (Before 4 PM Open)\n👤 Receiver: Rajesh Kumar\n❄️ Chiller Temp: 2.1°C\n\nPending Stock Verified on Scale:\n- Boneless Breast: 1.95 kg (0.11kg drip loss)\n- Lollipop / Wings: 2.15 kg\n- Curry Cut: 2.15 kg\n- Whole Broiler: 2.15 kg\n\nAll meat chilled and ready for 4:00 PM opening.`
     },
     {
-      label: '🚚 Fresh Delivery Received',
+      label: '🚚 03:45 PM Fresh Delivery Check-in',
       type: 'delivery',
-      text: `*FRESH POULTRY DELIVERY ARRIVED - ${selectedDate}*
-🚚 Supplier: Apex Fresh Poultry Farms
-Invoice #APX-9821 | Delivery Time: 08:45 AM
-Vehicle Temp: +1.8°C (Inspected & Verified)
-
-Received Quantities:
-- Boneless Breast: 30 kg @ ₹280/kg
-- Bone-in Curry Cut: 40 kg @ ₹190/kg
-- Chicken Wings: 15 kg @ ₹220/kg
-- Drumsticks: 10 kg @ ₹240/kg
-- Whole Broiler: 20 kg @ ₹175/kg
-
-Total Delivered: 115 kg. Delivery slip stamped & signed.`
+      text: `*AL-MADINA POULTRY DELIVERY ARRIVED*\n🚚 Supplier: Al-Madina Chicken & Seafood\nInvoice #ALM-8241 | Delivery Time: 03:45 PM\nVehicle Temp: +1.8°C (Verified)\n\nReceived Fresh Stock:\n- Boneless Breast: 20 kg @ ₹248/kg\n- Chicken Lollipop: 10 kg @ ₹186/kg\n- Curry Cut: 15 kg @ ₹190/kg\n\nTotal Delivered: 45 kg. Checked before 4:00 PM opening.`
     }
   ];
 
@@ -117,11 +64,11 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
     setInputText(preset.text);
     setTargetLogType(preset.type);
     if (preset.type === 'night') {
-      setUploadedPhotoUrl(createScalePhotoSvg('Pending Night Stock', 83.0, `${selectedDate} 23:45`));
+      setUploadedPhotoUrl('/scale-example.jpg');
     } else if (preset.type === 'delivery') {
-      setUploadedPhotoUrl(createDeliveryChallanSvg('APX-9821', 'Apex Fresh Poultry', 115, '₹24,800', `${selectedDate} 08:45 AM`));
+      setUploadedPhotoUrl(createDeliveryChallanSvg('ALM-8241', 'Al-Madina Chicken', 45, '₹10,500', `${selectedDate} 03:45 PM`));
     } else {
-      setUploadedPhotoUrl(createScalePhotoSvg('Morning Opening Verification', 81.6, `${selectedDate} 08:30`));
+      setUploadedPhotoUrl(createScalePhotoSvg('03:30 PM Opening Reconcile', 10.6, `${selectedDate} 15:30`));
     }
   };
 
@@ -143,28 +90,31 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
       logNightClosing(selectedDate, {
         staff: senderName,
         items: parsedData.items,
-        photoUrl: uploadedPhotoUrl || createScalePhotoSvg('Night Closing Chicken Stock', Object.values(parsedData.items).reduce((a, b) => a + b.weight, 0) || 50, `${selectedDate} 23:45`),
+        photoUrl: uploadedPhotoUrl || '/scale-example.jpg',
         whatsAppMessage: inputText,
-        chillerTemp: parsedData.temp || '2.4°C'
+        chillerTemp: parsedData.temp || '2.2°C',
+        timestamp: `${selectedDate} 04:00 AM`
       });
-      setToastMessage('✅ Night Closing Stock synced & logged!');
+      setToastMessage('✅ 04:00 AM Night Closing Stock synced & logged!');
     } else if (targetLogType === 'morning') {
       logMorningOpening(selectedDate, {
         staff: senderName,
         items: parsedData.items,
-        photoUrl: uploadedPhotoUrl || createScalePhotoSvg('Morning Pending Reconcile', Object.values(parsedData.items).reduce((a, b) => a + b.weight, 0) || 50, `${selectedDate} 08:30`),
-        notes: 'Verified via WhatsApp Morning Log'
+        photoUrl: uploadedPhotoUrl || createScalePhotoSvg('03:30 PM Opening Reconcile', Object.values(parsedData.items).reduce((a, b) => a + b.weight, 0) || 12, `${selectedDate} 15:30`),
+        notes: 'Verified via WhatsApp 03:30 PM Log',
+        timestamp: `${selectedDate} 03:30 PM`
       });
-      setToastMessage('✅ Morning Opening Stock reconciled & logged!');
+      setToastMessage('✅ 03:30 PM Opening Stock reconciled & logged!');
     } else if (targetLogType === 'delivery') {
       logDeliveryReceived(selectedDate, {
-        invoiceNo: parsedData.invoiceNo || 'APX-9821',
-        vendor: 'Apex Fresh Poultry Farms',
+        invoiceNo: parsedData.invoiceNo || 'ALM-8241',
+        vendor: 'Al-Madina Chicken & Seafood',
         items: parsedData.items,
-        challanPhoto: uploadedPhotoUrl || createDeliveryChallanSvg('APX-9821', 'Apex Poultry', Object.values(parsedData.items).reduce((a, b) => a + b.weight, 0) || 100, `${currency}22,000`, `${selectedDate} 08:45 AM`),
+        deliveryTime: '03:45 PM',
+        challanPhoto: uploadedPhotoUrl || createDeliveryChallanSvg('ALM-8241', 'Al-Madina Chicken', Object.values(parsedData.items).reduce((a, b) => a + b.weight, 0) || 45, `${currency}10,500`, `${selectedDate} 03:45 PM`),
         whatsAppMessage: inputText
       });
-      setToastMessage('✅ Fresh Delivery Stock received & added!');
+      setToastMessage('✅ Fresh Delivery received before 4:00 PM opening!');
     }
 
     confetti({
@@ -174,8 +124,8 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
     });
 
     setTimeout(() => {
-      setToastMessage(null), 3500;
-    });
+      setToastMessage(null);
+    }, 3500);
   };
 
   const copyToClipboard = (text) => {
@@ -186,7 +136,6 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      {/* Toast Alert */}
       {toastMessage && (
         <div className="fixed top-6 right-6 z-50 bg-emerald-600 text-white font-bold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 border border-emerald-400 animate-bounce">
           <CheckCircle2 className="w-5 h-5" />
@@ -203,12 +152,12 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
           <div>
             <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 flex-wrap">
               <span>WhatsApp Group Ingest & Vision OCR</span>
-              <span className="text-[9px] bg-emerald-500/20 text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/30">
-                AI Vision
+              <span className="text-[9px] bg-amber-500/20 text-amber-400 font-extrabold px-2 py-0.5 rounded-full border border-amber-500/30">
+                4 PM – 4 AM Timings
               </span>
             </h2>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Paste or type messages from WhatsApp or take iPhone scale photos to auto-extract meat weights.
+              Paste or type messages from your staff's WhatsApp group or snap ATOM scale photos.
             </p>
           </div>
         </div>
@@ -218,23 +167,21 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
             onClick={() => handleApplyPreset(samplePresets[0])}
             className="text-[11px] px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 whitespace-nowrap active:scale-95 transition-all"
           >
-            Load Night Msg
+            4 AM Close Msg
           </button>
           <button
             onClick={() => handleApplyPreset(samplePresets[2])}
             className="text-[11px] px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 whitespace-nowrap active:scale-95 transition-all"
           >
-            Load Delivery
+            Delivery Msg
           </button>
         </div>
       </div>
 
-      {/* Main 2-Column Interface: WhatsApp Chat Editor vs AI Entity Extractor */}
+      {/* Main 2-Column Interface */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-        {/* Left Column (7 Cols): WhatsApp Message Input & Photo Attachment */}
         <div className="lg:col-span-7 space-y-4">
           <div className="bg-[#0b141a] border border-[#222e35] rounded-2xl overflow-hidden shadow-2xl flex flex-col">
-            {/* WhatsApp Header bar */}
             <div className="bg-[#202c33] px-3 sm:px-4 py-2.5 sm:py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#2a3942]">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white text-xs">
@@ -242,13 +189,12 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-slate-100 flex items-center gap-1">
-                    <span>🐔 Kitchen Stock Audit Group</span>
+                    <span>🐔 Indus Wok Kitchen Audit Group</span>
                   </h4>
                   <p className="text-[9px] text-slate-400">Sunil, Rajesh, Head Chef, Imran +2</p>
                 </div>
               </div>
 
-              {/* Log Category Selector */}
               <div className="flex items-center gap-1 bg-[#111b21] p-1 rounded-lg border border-[#222e35] self-start sm:self-auto">
                 <button
                   onClick={() => setTargetLogType('night')}
@@ -256,7 +202,7 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                     targetLogType === 'night' ? 'bg-orange-600 text-white' : 'text-slate-400'
                   }`}
                 >
-                  🌙 Night
+                  🌙 04:00 AM Close
                 </button>
                 <button
                   onClick={() => setTargetLogType('morning')}
@@ -264,7 +210,7 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                     targetLogType === 'morning' ? 'bg-blue-600 text-white' : 'text-slate-400'
                   }`}
                 >
-                  ☀️ Morning
+                  ☀️ 03:30 PM Open
                 </button>
                 <button
                   onClick={() => setTargetLogType('delivery')}
@@ -277,9 +223,7 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
               </div>
             </div>
 
-            {/* Chat Body & Input Area */}
             <div className="p-3 sm:p-4 space-y-3 bg-[#0c1317] bg-opacity-95">
-              {/* Presets Chips */}
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1 ios-scroll">
                 {samplePresets.map((p, idx) => (
                   <button
@@ -292,7 +236,6 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                 ))}
               </div>
 
-              {/* Staff Sender Field */}
               <div className="flex items-center gap-2 bg-[#111b21] px-3 py-1.5 rounded-xl border border-[#222e35]">
                 <User className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span className="text-[11px] text-slate-400">Sender:</span>
@@ -304,16 +247,14 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                 />
               </div>
 
-              {/* Textarea */}
               <textarea
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 rows={7}
                 className="w-full bg-[#1f2c34] text-slate-100 text-xs font-mono p-3 rounded-xl border border-[#2a3942] focus:border-emerald-500 focus:outline-none leading-relaxed"
-                placeholder="Type or paste WhatsApp message (e.g. Boneless: 15.5 kg, Curry Cut: 20 kg)..."
+                placeholder="Type or paste WhatsApp message (e.g. Boneless: 2.06 kg, Wings: 2.25 kg)..."
               />
 
-              {/* Photo Attachment with Mobile Camera Trigger */}
               <div className="p-3 bg-[#111b21] rounded-xl border border-[#222e35] space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
@@ -323,7 +264,6 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                   <label className="cursor-pointer text-[10px] bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 px-2.5 py-1 rounded-lg border border-slate-700 flex items-center gap-1">
                     <Upload className="w-3 h-3" />
                     <span>Snap / Upload</span>
-                    {/* iPhone direct camera capture */}
                     <input 
                       type="file" 
                       accept="image/*" 
@@ -336,7 +276,7 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
 
                 <div className="relative rounded-lg overflow-hidden border border-slate-700/60 bg-slate-950 flex items-center justify-center min-h-[140px] max-h-[180px]">
                   <img
-                    src={uploadedPhotoUrl || createScalePhotoSvg('Pending Night Chicken Stock', 83.0, `${selectedDate} 23:45`)}
+                    src={uploadedPhotoUrl || '/scale-example.jpg'}
                     alt="Scale verification"
                     className="w-full h-full object-contain max-h-[170px]"
                   />
@@ -344,7 +284,6 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
               </div>
             </div>
 
-            {/* Bottom Actions */}
             <div className="p-3 bg-[#202c33] border-t border-[#2a3942] flex items-center justify-between gap-2">
               <button
                 onClick={() => copyToClipboard(inputText)}
@@ -359,13 +298,13 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 text-white font-bold text-xs shadow-lg shadow-emerald-700/30 transition-all"
               >
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Sync to {targetLogType === 'night' ? 'Night Stock' : targetLogType === 'morning' ? 'Morning Reconcile' : 'Delivery'}</span>
+                <span>Sync to {targetLogType === 'night' ? '04:00 AM Close' : targetLogType === 'morning' ? '03:30 PM Reconcile' : 'Delivery'}</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Right Column (5 Cols): AI Real-Time Recognition & Entity Card */}
+        {/* Right Column: AI Extractor */}
         <div className="lg:col-span-5 space-y-4">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col justify-between h-full space-y-3">
             <div>
@@ -386,23 +325,21 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
                 </span>
               </div>
 
-              {/* Extracted Metadata Grid */}
               <div className="grid grid-cols-2 gap-2 mb-3">
                 <div className="bg-slate-800/50 p-2 rounded-xl border border-slate-700/60">
-                  <span className="text-[9px] text-slate-400 uppercase font-semibold">Log Type</span>
+                  <span className="text-[9px] text-slate-400 uppercase font-semibold">Shift Timing</span>
                   <p className="text-xs font-bold text-white mt-0.5 truncate">
-                    {targetLogType === 'night' ? '🌙 Night Closing' : targetLogType === 'morning' ? '☀️ Morning Opening' : '🚚 Inbound Delivery'}
+                    {targetLogType === 'night' ? '🌙 04:00 AM Close' : targetLogType === 'morning' ? '☀️ 03:30 PM Open' : '🚚 03:45 PM Delivery'}
                   </p>
                 </div>
                 <div className="bg-slate-800/50 p-2 rounded-xl border border-slate-700/60">
                   <span className="text-[9px] text-slate-400 uppercase font-semibold">Chiller Temp</span>
                   <p className="text-xs font-bold text-emerald-400 mt-0.5">
-                    {parsedData?.temp || '2.3°C ✓'}
+                    {parsedData?.temp || '2.2°C ✓'}
                   </p>
                 </div>
               </div>
 
-              {/* Parsed Items List */}
               <div className="space-y-1.5">
                 <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider block">
                   Extracted Cuts ({Object.keys(parsedData?.items || {}).length}):
@@ -437,7 +374,7 @@ Total Delivered: 115 kg. Delivery slip stamped & signed.`
             </div>
 
             <div className="bg-orange-950/20 border border-orange-500/30 rounded-xl p-2.5 text-[10px] text-orange-200">
-              💡 Staff can simply type weights or snap scale photos on their phone.
+              💡 Calibrated for Indus Wok 4:00 PM – 4:00 AM operating hours.
             </div>
           </div>
         </div>

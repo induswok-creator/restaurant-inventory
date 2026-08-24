@@ -2,8 +2,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-24",
     "dayOfWeek": "Monday",
-    "timestampNight": "2026-08-24 23:45",
-    "timestampMorning": "2026-08-24 08:30",
+    "timestampNight": "2026-08-24 04:00",
+    "timestampMorning": "2026-08-24 15:30",
     "realPosBillCount": 6,
     "realRevenue": 2798,
     "nightClosing": {
@@ -41,7 +41,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": "/scale-example.jpg",
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-24*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 6 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-24*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 6 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -80,7 +80,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8200",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -166,8 +166,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-23",
     "dayOfWeek": "Sunday",
-    "timestampNight": "2026-08-23 23:45",
-    "timestampMorning": "2026-08-23 08:30",
+    "timestampNight": "2026-08-23 04:00",
+    "timestampMorning": "2026-08-23 15:30",
     "realPosBillCount": 13,
     "realRevenue": 10410,
     "nightClosing": {
@@ -205,7 +205,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-23*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.88 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.13 kg* | Today's POS Bills: 13 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-23*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.88 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.13 kg* | Today's POS Bills: 13 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -244,7 +244,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8201",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -341,8 +341,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-22",
     "dayOfWeek": "Saturday",
-    "timestampNight": "2026-08-22 23:45",
-    "timestampMorning": "2026-08-22 08:30",
+    "timestampNight": "2026-08-22 04:00",
+    "timestampMorning": "2026-08-22 15:30",
     "realPosBillCount": 20,
     "realRevenue": 14220,
     "nightClosing": {
@@ -380,7 +380,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-22*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.62 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.87 kg* | Today's POS Bills: 20 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-22*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.62 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.87 kg* | Today's POS Bills: 20 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -419,7 +419,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8202",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -531,8 +531,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-21",
     "dayOfWeek": "Friday",
-    "timestampNight": "2026-08-21 23:45",
-    "timestampMorning": "2026-08-21 08:30",
+    "timestampNight": "2026-08-21 04:00",
+    "timestampMorning": "2026-08-21 15:30",
     "realPosBillCount": 7,
     "realRevenue": 4105,
     "nightClosing": {
@@ -570,7 +570,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-21*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 7 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-21*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 7 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -609,7 +609,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8203",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -700,8 +700,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-20",
     "dayOfWeek": "Thursday",
-    "timestampNight": "2026-08-20 23:45",
-    "timestampMorning": "2026-08-20 08:30",
+    "timestampNight": "2026-08-20 04:00",
+    "timestampMorning": "2026-08-20 15:30",
     "realPosBillCount": 9,
     "realRevenue": 4286,
     "nightClosing": {
@@ -739,7 +739,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-20*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 9 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-20*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 9 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -778,7 +778,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8204",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -865,8 +865,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-19",
     "dayOfWeek": "Wednesday",
-    "timestampNight": "2026-08-19 23:45",
-    "timestampMorning": "2026-08-19 08:30",
+    "timestampNight": "2026-08-19 04:00",
+    "timestampMorning": "2026-08-19 15:30",
     "realPosBillCount": 3,
     "realRevenue": 835,
     "nightClosing": {
@@ -904,7 +904,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-19*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 3 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-19*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 3 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -943,7 +943,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8205",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -1025,8 +1025,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-18",
     "dayOfWeek": "Tuesday",
-    "timestampNight": "2026-08-18 23:45",
-    "timestampMorning": "2026-08-18 08:30",
+    "timestampNight": "2026-08-18 04:00",
+    "timestampMorning": "2026-08-18 15:30",
     "realPosBillCount": 9,
     "realRevenue": 5125,
     "nightClosing": {
@@ -1064,7 +1064,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-18*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 9 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-18*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 9 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -1103,7 +1103,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8206",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -1198,8 +1198,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-17",
     "dayOfWeek": "Monday",
-    "timestampNight": "2026-08-17 23:45",
-    "timestampMorning": "2026-08-17 08:30",
+    "timestampNight": "2026-08-17 04:00",
+    "timestampMorning": "2026-08-17 15:30",
     "realPosBillCount": 11,
     "realRevenue": 10055,
     "nightClosing": {
@@ -1237,7 +1237,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-17*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.26 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.51 kg* | Today's POS Bills: 11 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-17*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.26 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.51 kg* | Today's POS Bills: 11 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -1276,7 +1276,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8207",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -1376,8 +1376,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-16",
     "dayOfWeek": "Sunday",
-    "timestampNight": "2026-08-16 23:45",
-    "timestampMorning": "2026-08-16 08:30",
+    "timestampNight": "2026-08-16 04:00",
+    "timestampMorning": "2026-08-16 15:30",
     "realPosBillCount": 5,
     "realRevenue": 4122,
     "nightClosing": {
@@ -1415,7 +1415,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-16*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 5 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-16*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 5 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -1454,7 +1454,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8208",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -1543,8 +1543,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-15",
     "dayOfWeek": "Saturday",
-    "timestampNight": "2026-08-15 23:45",
-    "timestampMorning": "2026-08-15 08:30",
+    "timestampNight": "2026-08-15 04:00",
+    "timestampMorning": "2026-08-15 15:30",
     "realPosBillCount": 28,
     "realRevenue": 21370,
     "nightClosing": {
@@ -1582,7 +1582,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-15*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.89 kg*\n\u2022 Chicken Lolipop / Wings: *2.35 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *15.24 kg* | Today's POS Bills: 28 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-15*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.89 kg*\n\u2022 Chicken Lolipop / Wings: *2.35 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *15.24 kg* | Today's POS Bills: 28 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -1621,7 +1621,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8209",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -1743,8 +1743,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-14",
     "dayOfWeek": "Friday",
-    "timestampNight": "2026-08-14 23:45",
-    "timestampMorning": "2026-08-14 08:30",
+    "timestampNight": "2026-08-14 04:00",
+    "timestampMorning": "2026-08-14 15:30",
     "realPosBillCount": 12,
     "realRevenue": 9919,
     "nightClosing": {
@@ -1782,7 +1782,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-14*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.46 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.71 kg* | Today's POS Bills: 12 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-14*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.46 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.71 kg* | Today's POS Bills: 12 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -1821,7 +1821,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8210",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -1921,8 +1921,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-13",
     "dayOfWeek": "Thursday",
-    "timestampNight": "2026-08-13 23:45",
-    "timestampMorning": "2026-08-13 08:30",
+    "timestampNight": "2026-08-13 04:00",
+    "timestampMorning": "2026-08-13 15:30",
     "realPosBillCount": 12,
     "realRevenue": 5420,
     "nightClosing": {
@@ -1960,7 +1960,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-13*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.46 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.71 kg* | Today's POS Bills: 12 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-13*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.46 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.71 kg* | Today's POS Bills: 12 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -1999,7 +1999,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8211",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -2091,8 +2091,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-12",
     "dayOfWeek": "Wednesday",
-    "timestampNight": "2026-08-12 23:45",
-    "timestampMorning": "2026-08-12 08:30",
+    "timestampNight": "2026-08-12 04:00",
+    "timestampMorning": "2026-08-12 15:30",
     "realPosBillCount": 15,
     "realRevenue": 8200,
     "nightClosing": {
@@ -2130,7 +2130,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-12*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.53 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.78 kg* | Today's POS Bills: 15 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-12*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.53 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.78 kg* | Today's POS Bills: 15 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -2169,7 +2169,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8212",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -2265,8 +2265,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-11",
     "dayOfWeek": "Tuesday",
-    "timestampNight": "2026-08-11 23:45",
-    "timestampMorning": "2026-08-11 08:30",
+    "timestampNight": "2026-08-11 04:00",
+    "timestampMorning": "2026-08-11 15:30",
     "realPosBillCount": 24,
     "realRevenue": 10431,
     "nightClosing": {
@@ -2304,7 +2304,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-11*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.44 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.69 kg* | Today's POS Bills: 24 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-11*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.44 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.69 kg* | Today's POS Bills: 24 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -2343,7 +2343,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8213",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -2445,8 +2445,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-10",
     "dayOfWeek": "Monday",
-    "timestampNight": "2026-08-10 23:45",
-    "timestampMorning": "2026-08-10 08:30",
+    "timestampNight": "2026-08-10 04:00",
+    "timestampMorning": "2026-08-10 15:30",
     "realPosBillCount": 12,
     "realRevenue": 7710,
     "nightClosing": {
@@ -2484,7 +2484,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-10*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.71 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.96 kg* | Today's POS Bills: 12 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-10*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.71 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.96 kg* | Today's POS Bills: 12 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -2523,7 +2523,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8214",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -2625,8 +2625,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-09",
     "dayOfWeek": "Sunday",
-    "timestampNight": "2026-08-09 23:45",
-    "timestampMorning": "2026-08-09 08:30",
+    "timestampNight": "2026-08-09 04:00",
+    "timestampMorning": "2026-08-09 15:30",
     "realPosBillCount": 19,
     "realRevenue": 10474,
     "nightClosing": {
@@ -2664,7 +2664,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-09*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *4.14 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *15.39 kg* | Today's POS Bills: 19 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-09*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *4.14 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *15.39 kg* | Today's POS Bills: 19 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -2703,7 +2703,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8215",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -2807,8 +2807,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-08",
     "dayOfWeek": "Saturday",
-    "timestampNight": "2026-08-08 23:45",
-    "timestampMorning": "2026-08-08 08:30",
+    "timestampNight": "2026-08-08 04:00",
+    "timestampMorning": "2026-08-08 15:30",
     "realPosBillCount": 23,
     "realRevenue": 12295,
     "nightClosing": {
@@ -2846,7 +2846,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-08*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *4.11 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *15.36 kg* | Today's POS Bills: 23 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-08*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *4.11 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *15.36 kg* | Today's POS Bills: 23 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -2885,7 +2885,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8216",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -2993,8 +2993,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-07",
     "dayOfWeek": "Friday",
-    "timestampNight": "2026-08-07 23:45",
-    "timestampMorning": "2026-08-07 08:30",
+    "timestampNight": "2026-08-07 04:00",
+    "timestampMorning": "2026-08-07 15:30",
     "realPosBillCount": 28,
     "realRevenue": 10645,
     "nightClosing": {
@@ -3032,7 +3032,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-07*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.54 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.79 kg* | Today's POS Bills: 28 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-07*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.54 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.79 kg* | Today's POS Bills: 28 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -3071,7 +3071,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8217",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -3185,8 +3185,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-06",
     "dayOfWeek": "Thursday",
-    "timestampNight": "2026-08-06 23:45",
-    "timestampMorning": "2026-08-06 08:30",
+    "timestampNight": "2026-08-06 04:00",
+    "timestampMorning": "2026-08-06 15:30",
     "realPosBillCount": 17,
     "realRevenue": 6800,
     "nightClosing": {
@@ -3224,7 +3224,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-06*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.67 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.92 kg* | Today's POS Bills: 17 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-06*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.67 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.92 kg* | Today's POS Bills: 17 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -3263,7 +3263,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8218",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -3366,8 +3366,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-05",
     "dayOfWeek": "Wednesday",
-    "timestampNight": "2026-08-05 23:45",
-    "timestampMorning": "2026-08-05 08:30",
+    "timestampNight": "2026-08-05 04:00",
+    "timestampMorning": "2026-08-05 15:30",
     "realPosBillCount": 14,
     "realRevenue": 7560,
     "nightClosing": {
@@ -3405,7 +3405,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-05*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.92 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.17 kg* | Today's POS Bills: 14 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-05*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.92 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.17 kg* | Today's POS Bills: 14 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -3444,7 +3444,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8219",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -3547,8 +3547,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-04",
     "dayOfWeek": "Tuesday",
-    "timestampNight": "2026-08-04 23:45",
-    "timestampMorning": "2026-08-04 08:30",
+    "timestampNight": "2026-08-04 04:00",
+    "timestampMorning": "2026-08-04 15:30",
     "realPosBillCount": 6,
     "realRevenue": 3149,
     "nightClosing": {
@@ -3586,7 +3586,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-04*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 6 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-04*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *2.25 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *13.5 kg* | Today's POS Bills: 6 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -3625,7 +3625,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8220",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -3712,8 +3712,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-03",
     "dayOfWeek": "Monday",
-    "timestampNight": "2026-08-03 23:45",
-    "timestampMorning": "2026-08-03 08:30",
+    "timestampNight": "2026-08-03 04:00",
+    "timestampMorning": "2026-08-03 15:30",
     "realPosBillCount": 21,
     "realRevenue": 9489,
     "nightClosing": {
@@ -3751,7 +3751,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-03*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.44 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.69 kg* | Today's POS Bills: 21 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-03*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.44 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.69 kg* | Today's POS Bills: 21 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -3790,7 +3790,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8221",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {
@@ -3895,8 +3895,8 @@ export const REAL_INDUS_WOK_LOGS = [
   {
     "date": "2026-08-02",
     "dayOfWeek": "Sunday",
-    "timestampNight": "2026-08-02 23:45",
-    "timestampMorning": "2026-08-02 08:30",
+    "timestampNight": "2026-08-02 04:00",
+    "timestampMorning": "2026-08-02 15:30",
     "realPosBillCount": 24,
     "realRevenue": 12730,
     "nightClosing": {
@@ -3934,7 +3934,7 @@ export const REAL_INDUS_WOK_LOGS = [
         }
       },
       "photoUrl": null,
-      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-02*\n\ud83d\udcc5 Time: 23:45 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.65 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.9 kg* | Today's POS Bills: 24 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
+      "whatsAppMessage": "*INDUS WOK NIGHT CLOSING STOCK - 2026-08-02*\n\ud83d\udcc5 Time: 04:00 PM | Cashier / Shift: Sunil Sharma\n\u2744\ufe0f Walk-in Chiller Temp: 2.2\u00b0C\n\n\ud83c\udf57 *Pending Chicken on Scale:*\n\u2022 Chicken Boneless (Breast/Thigh): *3.65 kg*\n\u2022 Chicken Lolipop / Wings: *2.25 kg*\n\u2022 Chicken Curry Cut (Bone-in): *2.25 kg*\n\u2022 Whole Broiler Chicken: *2.25 kg*\n\u2022 Marinated Tikka Batches: *2.25 kg*\n\u2022 Chicken Keema (Minced): *2.25 kg*\n\n\ud83d\udcca Total Pending: *14.9 kg* | Today's POS Bills: 24 bills\n\ud83d\udcf8 ATOM digital scale photo attached.",
       "chillerTemp": "2.2\u00b0C",
       "verified": true
     },
@@ -3973,7 +3973,7 @@ export const REAL_INDUS_WOK_LOGS = [
     "deliveryReceived": {
       "invoiceNo": "ALM-8222",
       "vendor": "Al-Madina Chicken & Seafood",
-      "deliveryTime": "08:45 AM",
+      "deliveryTime": "03:45 PM",
       "vehicleTemp": "+1.8\u00b0C",
       "items": {
         "chk-boneless": {

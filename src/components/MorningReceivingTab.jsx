@@ -14,13 +14,14 @@ import {
   Camera, 
   ThermometerSnowflake, 
   User, 
-  FileText,
-  Upload,
-  ArrowRight,
-  TrendingDown,
-  ShieldAlert,
-  Plus,
-  Minus
+  FileText, 
+  Upload, 
+  ArrowRight, 
+  TrendingDown, 
+  ShieldAlert, 
+  Plus, 
+  Minus, 
+  Clock 
 } from 'lucide-react';
 import { createScalePhotoSvg, createDeliveryChallanSvg } from '../utils/mockImages';
 import confetti from 'canvas-confetti';
@@ -46,7 +47,7 @@ export const MorningReceivingTab = () => {
   // Active Sub-Tab: 'opening-audit' | 'delivery-intake'
   const [subTab, setSubTab] = useState('opening-audit');
 
-  // Form State - Morning Opening Reconcile
+  // Form State - Opening Reconcile at 03:30 PM
   const [morningStaff, setMorningStaff] = useState(morningOpening?.staff || 'Rajesh Kumar (Indus Wok Lead)');
   const [morningCounts, setMorningCounts] = useState(() => {
     const init = {};
@@ -63,7 +64,7 @@ export const MorningReceivingTab = () => {
     return init;
   });
 
-  // Form State - Delivery Receiving
+  // Form State - Delivery Receiving at 03:45 PM
   const [selectedSupplier, setSelectedSupplier] = useState(deliveryReceived?.vendor || suppliers[0]?.name || 'Al-Madina Chicken & Seafood');
   const [invoiceNo, setInvoiceNo] = useState(deliveryReceived?.invoiceNo || `ALM-${Math.floor(8200 + Math.random() * 500)}`);
   const [vehicleTemp, setVehicleTemp] = useState(deliveryReceived?.vehicleTemp || '+1.8°C');
@@ -110,12 +111,11 @@ export const MorningReceivingTab = () => {
     }
   }, [selectedDate, currentLog]);
 
-  // Calculations for Morning Opening
+  // Calculations
   const totalMorningOpeningKg = Number(Object.values(morningCounts).reduce((a, b) => Number(a) + (Number(b) || 0), 0).toFixed(2));
   const totalNightClosingKg = nightClosing ? Number(Object.values(nightClosing.items || {}).reduce((a, b) => Number(a) + (Number(b.weight) || 0), 0).toFixed(2)) : 0;
   const overnightVarianceKg = nightClosing ? Number((totalNightClosingKg - totalMorningOpeningKg).toFixed(2)) : 0;
 
-  // Calculations for Delivery Intake
   let totalDeliveryKg = 0;
   let totalDeliveryCost = 0;
   items.forEach(it => {
@@ -154,16 +154,17 @@ export const MorningReceivingTab = () => {
       };
     });
 
-    const photo = morningPhotoUrl || createScalePhotoSvg('Morning Pending Reconcile', totalMorningOpeningKg, `${selectedDate} 08:30`);
+    const photo = morningPhotoUrl || createScalePhotoSvg('03:30 PM Opening Reconcile', totalMorningOpeningKg, `${selectedDate} 15:30`);
 
     logMorningOpening(selectedDate, {
       staff: morningStaff,
       items: structuredItems,
       photoUrl: photo,
-      notes: `Overnight drip variance: -${overnightVarianceKg} kg`
+      notes: `Overnight drip variance: -${overnightVarianceKg} kg`,
+      timestamp: `${selectedDate} 03:30 PM`
     });
 
-    setToastMessage('✅ Morning stock verified & reconciled!');
+    setToastMessage('✅ 03:30 PM opening stock verified & reconciled!');
     confetti({ particleCount: 35, spread: 50 });
     setTimeout(() => setToastMessage(null), 3000);
   };
@@ -178,17 +179,18 @@ export const MorningReceivingTab = () => {
       };
     });
 
-    const challanPhoto = challanPhotoUrl || createDeliveryChallanSvg(invoiceNo, selectedSupplier, totalDeliveryKg, `${currency}${totalDeliveryCost.toLocaleString()}`, `${selectedDate} 08:45 AM`);
+    const challanPhoto = challanPhotoUrl || createDeliveryChallanSvg(invoiceNo, selectedSupplier, totalDeliveryKg, `${currency}${totalDeliveryCost.toLocaleString()}`, `${selectedDate} 03:45 PM`);
 
     logDeliveryReceived(selectedDate, {
       invoiceNo,
       vendor: selectedSupplier,
       vehicleTemp,
       items: structuredItems,
+      deliveryTime: '03:45 PM',
       challanPhoto
     });
 
-    setToastMessage(`✅ ${totalDeliveryKg} kg fresh chicken from ${selectedSupplier} added!`);
+    setToastMessage(`✅ ${totalDeliveryKg} kg fresh chicken received before 4 PM opening!`);
     confetti({ particleCount: 45, spread: 60 });
     setTimeout(() => setToastMessage(null), 3000);
   };
@@ -217,18 +219,18 @@ export const MorningReceivingTab = () => {
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-base sm:text-lg font-bold text-white">Morning Audit & Fresh Delivery Intake</h2>
-              <span className="text-[11px] text-slate-400 font-mono bg-slate-800 px-2 py-0.5 rounded-full border border-slate-700">
-                {selectedDate} (Morning Shift)
+              <h2 className="text-base sm:text-lg font-bold text-white">Opening Reconcile & Fresh Delivery Intake</h2>
+              <span className="text-[11px] text-amber-400 font-mono bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/30">
+                03:30 PM (Opening for 4 PM – 4 AM Shift)
               </span>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Verify morning pending stock on scale, then log newly arrived crates from Al-Madina / Apex Poultry.
+              Verify pending stock against 4:00 AM closing, then log newly arrived poultry crates before 4:00 PM opening.
             </p>
           </div>
         </div>
 
-        {/* Tab Switcher: Opening vs Delivery */}
+        {/* Tab Switcher */}
         <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 w-full sm:w-auto">
           <button
             onClick={() => setSubTab('opening-audit')}
@@ -237,7 +239,7 @@ export const MorningReceivingTab = () => {
             }`}
           >
             <Scale className="w-3.5 h-3.5" />
-            <span>1. Morning Reconcile</span>
+            <span>1. 03:30 PM Reconcile</span>
           </button>
           <button
             onClick={() => setSubTab('delivery-intake')}
@@ -254,7 +256,7 @@ export const MorningReceivingTab = () => {
       {/* Summary KPI Strip */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-          <span className="text-[9px] uppercase font-bold text-slate-400 block">Night Closing</span>
+          <span className="text-[9px] uppercase font-bold text-slate-400 block">4:00 AM Closing</span>
           <div className="flex items-baseline gap-1 mt-0.5">
             <span className="text-base sm:text-lg font-extrabold text-slate-300">{totalNightClosingKg}</span>
             <span className="text-xs text-slate-400">KG</span>
@@ -262,7 +264,7 @@ export const MorningReceivingTab = () => {
         </div>
 
         <div className="bg-slate-900/80 border border-slate-800 p-3 rounded-xl">
-          <span className="text-[9px] uppercase font-bold text-slate-400 block">Morning Pending</span>
+          <span className="text-[9px] uppercase font-bold text-slate-400 block">03:30 PM Opening</span>
           <div className="flex items-baseline gap-1 mt-0.5">
             <span className="text-base sm:text-lg font-extrabold text-amber-400">{totalMorningOpeningKg}</span>
             <span className="text-xs text-slate-400">KG</span>
@@ -280,7 +282,7 @@ export const MorningReceivingTab = () => {
         </div>
 
         <div className="bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/30 p-3 rounded-xl">
-          <span className="text-[9px] uppercase font-bold text-emerald-400 block">Total Ready Today</span>
+          <span className="text-[9px] uppercase font-bold text-emerald-400 block">Total Ready (4 PM – 4 AM)</span>
           <div className="flex items-baseline gap-1 mt-0.5">
             <span className="text-base sm:text-xl font-extrabold text-emerald-300">{totalAvailableStockKg}</span>
             <span className="text-xs text-slate-400">KG</span>
@@ -288,13 +290,13 @@ export const MorningReceivingTab = () => {
         </div>
       </div>
 
-      {/* View 1: Morning Opening Reconcile */}
+      {/* View 1: 03:30 PM Opening Reconcile */}
       {subTab === 'opening-audit' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
           <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                Morning Scale Weight vs Night Closing
+                03:30 PM Physical Count vs 4:00 AM Closing
               </h3>
               <button
                 onClick={handleSaveMorningOpening}
@@ -308,7 +310,7 @@ export const MorningReceivingTab = () => {
             <div className="flex items-center gap-2 bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/60">
               <User className="w-4 h-4 text-amber-400 shrink-0" />
               <div className="flex-1 min-w-0">
-                <span className="text-[9px] text-slate-400 font-bold block">Morning Shift Receiver:</span>
+                <span className="text-[9px] text-slate-400 font-bold block">Opening Shift Lead:</span>
                 <input
                   type="text"
                   value={morningStaff}
@@ -337,11 +339,11 @@ export const MorningReceivingTab = () => {
                         <span>{item.icon}</span>
                         <div>
                           <h4 className="text-xs font-bold text-white">{item.name}</h4>
-                          <span className="text-[10px] text-slate-400">Night Log: {nightWeight} {item.unit}</span>
+                          <span className="text-[10px] text-slate-400">4 AM Close: {nightWeight} {item.unit}</span>
                         </div>
                       </div>
 
-                      {/* Steppers for Mobile */}
+                      {/* Steppers */}
                       <div className="flex items-center gap-1.5">
                         <button
                           type="button"
@@ -371,7 +373,7 @@ export const MorningReceivingTab = () => {
                     </div>
 
                     <div className="flex items-center justify-between text-[10px] pt-1.5 border-t border-slate-700/40">
-                      <span className="text-slate-400">Overnight Variance:</span>
+                      <span className="text-slate-400">Overnight Thaw Variance:</span>
                       <span className={`font-mono font-bold ${diff < 0 ? (isLoss ? 'text-red-400' : 'text-amber-400') : 'text-emerald-400'}`}>
                         {diff > 0 ? `+${diff}` : `${diff}`} {item.unit} {diff < 0 ? '(thaw loss)' : ''}
                       </span>
@@ -422,7 +424,7 @@ export const MorningReceivingTab = () => {
           <div className="lg:col-span-7 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                Fresh Poultry Delivery Intake
+                Fresh Poultry Delivery (03:45 PM Check-in)
               </h3>
               <button
                 onClick={handleSaveDeliveryReceived}
@@ -562,7 +564,7 @@ export const MorningReceivingTab = () => {
               </div>
               <div className="rounded-xl overflow-hidden border border-slate-700 bg-slate-950 max-h-52 flex items-center justify-center">
                 <img
-                  src={challanPhotoUrl || createDeliveryChallanSvg(invoiceNo, selectedSupplier, totalDeliveryKg, `${currency}${totalDeliveryCost.toLocaleString()}`, `${selectedDate} 08:45 AM`)}
+                  src={challanPhotoUrl || createDeliveryChallanSvg(invoiceNo, selectedSupplier, totalDeliveryKg, `${currency}${totalDeliveryCost.toLocaleString()}`, `${selectedDate} 03:45 PM`)}
                   alt="Delivery Challan Proof"
                   className="w-full h-full object-contain"
                 />
